@@ -9,7 +9,8 @@ export async function load({ locals: { stripe }, parent }) {
 		expand: ['subscriptions']
 	});
 
-	if(customer.subscriptions.data.length === 0) 
+	if (customer.subscriptions.data.length === 0) {
+	}
 
 	const subscription = customer.subscriptions.data.filter(
 		(s) => s.customer === team.stripe_customer
