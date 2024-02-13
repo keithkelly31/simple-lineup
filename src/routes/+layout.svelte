@@ -5,6 +5,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
+	/** @type { import("./$types").LayoutData } */
 	export let data;
 
 	let { supabase, session } = data;
@@ -42,11 +43,11 @@
 				</li>
 			{:else}
 				<li>
-					<a href="/signin">Sign In</a>
+					<a href="/auth/signin">Sign In</a>
 				</li>
 
 				<li>
-					<a href="/signup">Sign Up</a>
+					<a href="/auth/signup">Sign Up</a>
 				</li>
 			{/if}
 		</ul>

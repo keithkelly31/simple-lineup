@@ -12,9 +12,9 @@
 	<a role="button" href="/team/join" class="secondary">Join Team</a>
 </section>
 
-{#each teams as { id, name } (id)}
+{#each teams as team (team.teams.id)}
 	<article>
-		<a href="/team/{id}">{name}</a>
+		<a href="/team/{team.teams.id}">{team.teams.name}</a>
 	</article>
 {:else}
 	<article>You are not a member of any teams</article>

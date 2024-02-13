@@ -9,7 +9,7 @@
 	$: ({ session } = data);
 </script>
 
-<h1>{session.user.first_name} {session.user.last_name}</h1>
+<h1>{session?.user.user_metadata.first_name} {session?.user.user_metadata.last_name}</h1>
 
 <Nav let:toggle summary="Menu">
 	<NavLink href="/member/{$page.params.uid}/messages" {toggle}>Messages</NavLink>
@@ -18,7 +18,7 @@
 	<NavLink href="/member/{$page.params.uid}/settings" {toggle}>Settings</NavLink>
 	<NavLink href="/member/{$page.params.uid}/teams" {toggle}>Teams</NavLink>
 	<hr />
-	<NavLink href="/signout" {toggle}>Sign Out</NavLink>
+	<NavLink href="/auth/signout" {toggle}>Sign Out</NavLink>
 </Nav>
 
 <slot />
