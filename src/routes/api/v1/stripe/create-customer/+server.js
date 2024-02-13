@@ -4,9 +4,9 @@ export async function POST({ locals: { stripe, supabase }, request }) {
 		name: 'Hello'
 	});
 
-	await supabase
-		.from('teams')
-		.update({ stripe_customer: customer.id })
-		.eq('id', request.body?.record.id);
+	// await supabase
+	// 	.from('teams')
+	// 	.update({ stripe_customer: customer.id })
+	// 	.eq('id', request.body?.record.id);
 	return new Response();
 }
