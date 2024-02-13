@@ -1,5 +1,6 @@
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ locals: { stripe, supabase }, request }) {
+	console.log(request);
 	const customer = await stripe.customers.create({
 		name: request.body?.record.id
 	});
