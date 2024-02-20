@@ -1,17 +1,18 @@
 <script>
 	import { page } from '$app/stores';
+	import Form from '$lib/components/form.svelte';
 	import NavLink from '$lib/components/nav-link.svelte';
 	import Nav from '$lib/components/nav.svelte';
 
 	/** @type { import("./$types").LayoutData } */
 	export let data;
-	let { isAdmin, team } = data;
-	$: ({ isAdmin, team } = data);
+	let { isAdmin, subscription, team } = data;
+	$: ({ isAdmin, subscription, team } = data);
 </script>
 
-{#if team.active}
-	<section>
-		<h1>{team.name}</h1>
+<section>
+	<h1>{team.name}</h1>
+	{#if subscription?.status === 'active'}
 		<Nav let:toggle summary="Team Menu">
 			<NavLink href="/team/{$page.params.uid}" {toggle}>Dashboard</NavLink>
 			<NavLink href="/team/{$page.params.uid}/messages" {toggle}>Messages</NavLink>
@@ -22,26 +23,30 @@
 				<NavLink href="/team/{$page.params.uid}/subscription" {toggle}>Subscription</NavLink>
 			{/if}
 		</Nav>
-	</section>
+	{/if}
+</section>
 
+{#if subscription?.status === 'active'}
 	<slot />
 {:else}
-	<h1>{team.name}</h1>
 	<article>
-		<h2>No Active Subscription</h2>
-
+		<hgroup>
+			<h2>Subscription Not Active</h2>
+			<h3>This team does not have an active subscription.</h3>
+		</hgroup>
 		{#if isAdmin}
 			<p>
-				This team does not currently have an active subscription. Please click the button below to
-				setup a subscription and activate the team.
+				Please click the button below to complete the subscription process and activate this team.
 			</p>
-
-			<p>If you beleive that this is an error, please submit a support request.</p>
-
-			<button>Setup Subscription</button>
+			<Form action="/team/{$page.params.uid}/activate" label="Activate Team">
+				<input name="id" type="hidden" value={team.id} />
+				<input name="stripe_customer" type="hidden" value={team.stripe_customer} />
+			</Form>
 		{:else}
-			This team does not currently have an active subscription. If you think this is an error,
-			please contact your team's administrator.
+			<p>
+				Please contact your team's administrator to make them aware that the subscription for this
+				team is not active.
+			</p>
 		{/if}
 	</article>
 {/if}

@@ -12,7 +12,11 @@ export const actions = {
 		const password = form.get('password');
 
 		const { error } = await supabase.auth.updateUser({ password });
-		if (error) return fail(500, { error: true, message: error.message });
+		if (error)
+			return fail(500, {
+				error: true,
+				message: `There was an error when attempting to update your password. ${error.message}`
+			});
 		return {
 			success: true,
 			message: 'Your password has been reset.'

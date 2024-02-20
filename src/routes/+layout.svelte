@@ -36,7 +36,7 @@
 			</li>
 		</ul>
 
-		<ul>
+		<!-- <ul>
 			{#if session}
 				<li>
 					<a href="/member/{session.user.id}">Home</a>
@@ -50,7 +50,7 @@
 					<a href="/auth/signup">Sign Up</a>
 				</li>
 			{/if}
-		</ul>
+		</ul> -->
 	</nav>
 </header>
 

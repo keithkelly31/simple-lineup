@@ -4,7 +4,7 @@
 
 <h3>Update Email</h3>
 
-<Form let:busy>
+<Form label="Update">
 	<label for="email">Email</label>
 	<input
 		aria-describedby="emal-helper"
@@ -15,6 +15,4 @@
 		required
 	/>
 	<small id="email-helper">Please enter your new email address</small>
-
-	<button aria-busy={busy} type="submit">Update</button>
 </Form>

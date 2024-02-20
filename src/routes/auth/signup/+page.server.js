@@ -21,7 +21,11 @@ export const actions = {
 			password,
 			options: { emailRedirectTo: url.origin, data: { first_name, last_name } }
 		});
-		if (error) return fail(500, { error: true, message: error.message });
+		if (error)
+			return fail(400, {
+				error: true,
+				message: `There was an error when attempting to sign you up.\n${error.message}`
+			});
 		return { success: true, message: 'You have been signed up successfully' };
 	}
 };

@@ -18,7 +18,11 @@ export const actions = {
 			email,
 			password
 		});
-		if (error) return fail(500, { error: true, message: error.message });
+		if (error)
+			return fail(400, {
+				error: true,
+				message: `There was an error when attempting to sign you in. ${error.message}`
+			});
 		return { success: true };
 	}
 };

@@ -12,7 +12,7 @@
 
 <h1>Sign In</h1>
 
-<Form {form} label="Sign In">
+<Form label="Sign In">
 	<fieldset>
 		<label for="email">Email</label>
 		<input autocomplete="email" type="email" name="email" id="email" required />

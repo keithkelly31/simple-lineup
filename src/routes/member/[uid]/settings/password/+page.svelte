@@ -4,7 +4,7 @@
 
 <h3>Update Password</h3>
 
-<Form let:busy>
+<Form label="Update">
 	<label for="password">Password</label>
 	<input
 		aria-describedby="password-helper"
@@ -25,6 +25,4 @@
 		required
 	/>
 	<small id="confirm-helper">Please confirm the new password you entered</small>
-
-	<button aria-busy={busy} type="submit">Update</button>
 </Form>

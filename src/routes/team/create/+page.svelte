@@ -12,7 +12,7 @@
 	system you will be redirected to the payment processing page to setup your team's subscription.
 </p>
 
-<Form {form} label="Create A Team">
+<Form label="Create A Team">
 	<label for="name">Name</label>
 	<input type="text" name="name" id="name" required />
 </Form>
