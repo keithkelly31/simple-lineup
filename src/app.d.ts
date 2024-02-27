@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { Session } from '@supabase/supabase-js';
+import type { Session, SupabaseClient } from '@supabase/supabase-js';
 
 // for information about these interfaces
 declare global {
@@ -12,6 +12,7 @@ declare global {
 		interface Locals {
 			mail: any;
 			supabase: SupabaseClient;
+			supabase_admin: SupabaseClient;
 			stripe: Stripe;
 			getSession(): Promise<Session | null>;
 		}

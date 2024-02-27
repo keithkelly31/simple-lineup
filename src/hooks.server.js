@@ -1,4 +1,4 @@
-import { MAILGUN_SECRET_KEY, STRIPE_SECRET_KEY } from '$env/static/private';
+import { MAILGUN_SECRET_KEY, STRIPE_SECRET_KEY, SUPABASE_SERVICE_ROLE } from '$env/static/private';
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import FormData from 'form-data';
@@ -12,6 +12,12 @@ export const handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		event
+	});
+
+	event.locals.supabase_admin = createSupabaseServerClient({
+		supabaseUrl: PUBLIC_SUPABASE_URL,
+		supabaseKey: SUPABASE_SERVICE_ROLE,
 		event
 	});
 
