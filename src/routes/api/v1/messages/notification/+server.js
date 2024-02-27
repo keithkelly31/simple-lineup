@@ -3,7 +3,7 @@ export async function POST({ locals: { supabase, supabase_admin }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	const { data } = await supabase
+	const { data } = await supabase_admin
 		.from('message_members')
 		.select('messages(subject, text, teams(name))')
 		.eq('id', record.message)
