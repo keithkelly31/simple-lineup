@@ -3,11 +3,14 @@ export async function POST({ locals: { supabase }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	// if (record.message) return new Response();
+	console.log(record);
 
-	await supabase
+	if (record.message) return new Response();
+
+	const { error } = await supabase
 		.from('message_members')
 		.insert({ message: record.id, member: record.member, read: true });
+	if (error) console.error(error);
 
 	record.ids
 		.split(',')
