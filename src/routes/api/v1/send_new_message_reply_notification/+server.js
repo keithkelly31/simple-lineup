@@ -17,7 +17,7 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 		.eq('message', record.message)
 		.neq('member', record.member);
 	if (!recipients)
-		return new Response(null, { status: 500, statusText: 'Problems getting the recipients' });
+		return new Response(null, { status: 501, statusText: 'Problems getting the recipients' });
 
 	const sendNotifications = async () => {
 		const from = reply.messages.teams.name;
