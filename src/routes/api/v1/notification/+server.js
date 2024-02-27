@@ -10,7 +10,7 @@ export async function POST({ locals: { mail, supabase }, request }) {
 
 	const message = {
 		to: data.email,
-		from: 'Simple Lineup Notifications <noreply@simplelineup.com>',
+		from: `${record.from || 'Simple Lineup Notifications'} <noreply@mg.simplelineup.com>`,
 		html: record.html,
 		subject: record.subject,
 		text: record.text
