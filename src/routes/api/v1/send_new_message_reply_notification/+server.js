@@ -24,13 +24,13 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 		const html = `
 		<p>${reply.members.first_name} ${reply.members.last_name} has replied to the message <strong>${reply.messages.subject}</strong>.</p>
 		<hr />
-		<pre>${data.text}</pre>
+		<pre>${reply.text}</pre>
 		<hr />
 		<p>
-			<a href="${url.origin}/team/${data.messages.teams.id}/messages/${record.message}">View and respond at SimpleLineup.com</a>
+			<a href="${url.origin}/team/${reply.messages.teams.id}/messages/${record.message}">View and respond at SimpleLineup.com</a>
 		</p>`;
-		const subject = `New ${data.teams.name} Message Reply`;
-		const text = `${reply.members.first_name} ${reply.members.last_name} has replied to the message ${reply.messages.subject}.\n\n${data.text}\n\nView and respond at ${url.origin}/team/${data.messages.teams.id}/messages/${record.message}.`;
+		const subject = `New ${reply.messages.teams.name} Message Reply`;
+		const text = `${reply.members.first_name} ${reply.members.last_name} has replied to the message ${reply.messages.subject}.\n\n${reply.text}\n\nView and respond at ${url.origin}/team/${reply.messages.teams.id}/messages/${record.message}.`;
 
 		const promises = recipients.map(
 			async (/** @type {any} */ r) =>
