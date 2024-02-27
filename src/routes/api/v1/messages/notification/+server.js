@@ -5,7 +5,7 @@ export async function POST({ locals: { supabase, supabase_admin }, request }) {
 
 	const { data } = await supabase
 		.from('messages')
-		.select('subject, text, teams(name)')
+		.select(`subject, text, teams(name)`)
 		.eq('id', record.message)
 		.single();
 	if (!data) return new Response(null, { status: 500 });
