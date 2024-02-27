@@ -1,11 +1,11 @@
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ locals: { supabase, supabase_admin }, request }) {
+export async function POST({ locals: { supabase_admin }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	const { data } = await supabase
+	const { data } = await supabase_admin
 		.from('messages')
-		.select('subject, text, teams(*)')
+		.select('subject, text, teams(name)')
 		.eq('id', record.message)
 		.single();
 	if (!data) return new Response(null, { status: 500 });
