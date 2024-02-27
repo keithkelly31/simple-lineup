@@ -3,7 +3,7 @@ export async function POST({ locals: { supabase }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	if (record.message) return new Response();
+	// if (record.message) return new Response();
 
 	await supabase
 		.from('message_members')
