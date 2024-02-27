@@ -3,7 +3,7 @@ export async function POST({ cookies, locals: { supabase }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	console.log(cookies);
+	console.log(cookies.getAll());
 
 	if (record.message) return new Response();
 
