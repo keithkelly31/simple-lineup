@@ -3,9 +3,9 @@ export async function POST({ locals: { supabase, supabase_admin }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	const { data } = await supabase_admin
+	const { data } = await supabase
 		.from('message_members')
-		.select('messages(subject, text, teams(name))')
+		.select('*')
 		.eq('id', record.message)
 		.single();
 	// if (!data) return new Response(null, { status: 500 });
