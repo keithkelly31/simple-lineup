@@ -3,7 +3,7 @@ export async function POST({ locals: { supabase, supabase_admin }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	console.log('running');
+	console.log('running?');
 
 	// const { data } = await supabase
 	// 	.from('messages')
