@@ -7,6 +7,11 @@
 
 	<pre>{$page.error?.message}</pre>
 
+	{#if $page.error?.details}
+		<pre>Code: {$page.form.details.code}</pre>
+		<pre>Details: {$page.form.details.message}</pre>
+	{/if}
+
 	<a href={$page.error?.redirect || '/'}>
 		{$page.error?.redirect ? 'Go back' : 'Head home'}
 	</a>

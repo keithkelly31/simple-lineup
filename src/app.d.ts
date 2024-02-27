@@ -6,6 +6,7 @@ import type { Session, SupabaseClient } from '@supabase/supabase-js';
 declare global {
 	namespace App {
 		interface Error {
+			details?: any;
 			message: string;
 			redirect?: string;
 		}
