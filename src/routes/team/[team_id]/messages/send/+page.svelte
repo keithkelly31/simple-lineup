@@ -82,7 +82,7 @@
 	<label for="text">Message</label>
 	<textarea name="text" id="text" rows="7" required></textarea>
 
-	<input type="hidden" name="ids" value={ids} />
+	<input type="hidden" name="recipients" value={ids} />
 </Form>
 
 <style>
