@@ -16,6 +16,8 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 		.select('id')
 		.eq('message', record.message)
 		.neq('member', record.member);
+
+	console.log(recipients);
 	if (!recipients)
 		return new Response(null, { status: 500, statusText: 'Problems getting the recipients' });
 
