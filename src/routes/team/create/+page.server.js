@@ -1,5 +1,5 @@
 import { STRIPE_PRICE } from '$env/static/private';
-import { error, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ parent }) {
@@ -16,10 +16,14 @@ export const actions = {
 
 		const form = await request.formData();
 		const name = form.get('name');
+		const password = form.get('password');
+
+		if (!name || !password)
+			return fail(400, { error: true, message: 'Please complete all fields of the form.' });
 
 		const { data: team, error: err } = await supabase
 			.from('teams')
-			.insert({ name, admin: session.user.id })
+			.insert({ name, password, admin: session.user.id })
 			.select()
 			.single();
 
@@ -64,11 +68,18 @@ export const actions = {
 					}
 				],
 				mode: 'subscription',
+				subscription_data: {
+					trial_period_days: 7,
+					trial_settings: {
+						end_behavior: {
+							missing_payment_method: 'pause'
+						}
+					}
+				},
 				success_url: `${url.origin}/team/${team.id}`
 			});
 
 			return {
-				success: true,
 				url: checkout_session.url
 			};
 		} catch (err) {

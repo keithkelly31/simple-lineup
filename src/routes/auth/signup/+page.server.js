@@ -26,6 +26,10 @@ export const actions = {
 				error: true,
 				message: `There was an error when attempting to sign you up.\n${error.message}`
 			});
-		return { success: true, message: 'You have been signed up successfully' };
+		return {
+			success: true,
+			message:
+				'You have been signed up successfully. Please check your email to complete the confirmation process. You can safely close this window.'
+		};
 	}
 };

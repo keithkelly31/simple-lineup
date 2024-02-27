@@ -37,12 +37,13 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource-variable/quicksand": "^5.0.16",
+		"@fontsource/roboto": "^5.0.8",
 		"@picocss/pico": "^2.0.0-rc4",
-		"@sendgrid/mail": "^8.1.1",
 		"@supabase/auth-helpers-sveltekit": "^0.12.0",
 		"@supabase/supabase-js": "^2.39.3",
 		"date-fns": "^3.3.1",
+		"form-data": "^4.0.0",
+		"mailgun.js": "^10.2.1",
 		"stripe": "^14.16.0"
 	}
 }

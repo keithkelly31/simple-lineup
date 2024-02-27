@@ -1,5 +1,5 @@
 <script>
-	import '@fontsource-variable/quicksand';
+	import '@fontsource/roboto';
 	import '../app.scss';
 
 	import { invalidate } from '$app/navigation';
@@ -23,6 +23,10 @@
 </script>
 
 <svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+	/>
 	<script defer data-domain="simplelineup.com" src="https://plausible.io/js/script.js"></script>
 </svelte:head>
 
@@ -36,7 +40,7 @@
 			</li>
 		</ul>
 
-		<!-- <ul>
+		<ul>
 			{#if session}
 				<li>
 					<a href="/member/{session.user.id}">Home</a>
@@ -50,7 +54,7 @@
 					<a href="/auth/signup">Sign Up</a>
 				</li>
 			{/if}
-		</ul> -->
+		</ul>
 	</nav>
 </header>
 
@@ -64,6 +68,7 @@
 			<li>&copy; Simple Lineup {new Date().getFullYear()}. All rights reserved.</li>
 		</ul>
 		<ul>
+			<li><a href="/contact">Contact</a></li>
 			<li><a href="/privacy">Privacy</a></li>
 			<li><a href="/tos">Terms of Service</a></li>
 		</ul>
