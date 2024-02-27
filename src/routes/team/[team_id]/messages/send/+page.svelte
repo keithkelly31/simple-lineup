@@ -1,5 +1,4 @@
 <script>
-	import { page } from '$app/stores';
 	import Form from '$lib/components/form.svelte';
 
 	/** @type { import("./$types").PageData } */
@@ -76,12 +75,14 @@
 	</div>
 </details>
 
-<Form action="/team/{$page.params.team_id}/messages/send/{ids}" label="Send Message">
+<Form label="Send Message">
 	<label for="subject">Subject</label>
 	<input id="subject" name="subject" type="text" required />
 
 	<label for="text">Message</label>
 	<textarea name="text" id="text" rows="7" required></textarea>
+
+	<input type="hidden" name="ids" value={ids} />
 </Form>
 
 <style>
