@@ -1,9 +1,9 @@
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ locals: { supabase }, request }) {
+export async function POST({ cookies, locals: { supabase }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
-	console.log(body);
+	console.log(cookies);
 
 	if (record.message) return new Response();
 
