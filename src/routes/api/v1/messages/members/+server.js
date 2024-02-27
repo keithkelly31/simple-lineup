@@ -9,7 +9,7 @@ export async function POST({ cookies, locals: { supabase_admin }, request }) {
 		.from('message_members')
 		.insert({ message: record.id, member: record.member, read: true });
 
-	async () => {
+	const storeMessageMembers = async () => {
 		const promises = record.ids
 			.split(',')
 			.map(
@@ -18,6 +18,8 @@ export async function POST({ cookies, locals: { supabase_admin }, request }) {
 			);
 		await Promise.all(promises);
 	};
+
+	await storeMessageMembers();
 
 	return new Response();
 }
