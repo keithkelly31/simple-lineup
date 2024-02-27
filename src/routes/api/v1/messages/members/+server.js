@@ -5,7 +5,9 @@ export async function POST({ locals: { supabase }, request }) {
 
 	if (record.message) return new Response();
 
-	await supabase.from('message_members').insert({ message: record.id, member: record.member });
+	await supabase
+		.from('message_members')
+		.insert({ message: record.id, member: record.member, read: true });
 
 	record.ids
 		.split(',')
