@@ -8,7 +8,7 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 
 	const { data: reply } = await supabase_admin
 		.from('message_replies')
-		.select('members(first_name, last_name), messages(subject, teams(id, name))')
+		.select('*, members(first_name, last_name), messages(subject, teams(id, name))')
 		.eq('id', record.id)
 		.single();
 	console.log(reply);
