@@ -5,7 +5,7 @@ export async function POST({ locals: { supabase_admin }, request }) {
 
 	await supabase_admin
 		.from('message_members')
-		.update({ unread_replies: record.id })
+		.update({ unread_reply: record.id })
 		.eq('message', record.message)
 		.neq('member', record.member);
 
