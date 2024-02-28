@@ -25,9 +25,7 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 	const subject = `New ${data.teams.name} Message`;
 	const text = `You have received a new message from ${data.members.first_name} ${data.members.last_name}.\n\n${data.subject}\n\n${data.text}\n\nView and respond at ${url.origin}/team/${data.teams.id}/messages/${record.message}.`;
 
-	await supabase_admin
-		.from('notifications')
-		.insert({ from, html, member: record.member, subject, text });
+	await supabase_admin.from('emails').insert({ from, html, member: record.member, subject, text });
 
 	return new Response();
 }
