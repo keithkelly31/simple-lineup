@@ -4,13 +4,11 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 	const record = body.record;
 	const old_record = body.old_record;
 
-	console.log(body);
-
 	if (old_record.unread_reply === record.unread_reply) return new Response();
 
 	const { data: reply } = await supabase_admin
 		.from('send_new_message_reply_notification')
-		.select()
+		.select('*')
 		.eq('id', record.id)
 		.single();
 	console.log(reply);
