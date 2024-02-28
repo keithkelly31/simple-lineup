@@ -1,11 +1,11 @@
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ locals: { supabase_admin }, request, url }) {
+export async function POST({ locals: { supabase_admin }, request }) {
 	const body = await request.json();
 	const record = body.record;
 
 	await supabase_admin
 		.from('message_members')
-		.update({ unread_replies: true })
+		.update({ unread_replies: record.id })
 		.eq('message', record.message)
 		.neq('member', record.member);
 
