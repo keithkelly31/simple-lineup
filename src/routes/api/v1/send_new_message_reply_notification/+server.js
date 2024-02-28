@@ -9,8 +9,7 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 	const { data: reply } = await supabase_admin
 		.from('send_new_message_reply_notification')
 		.select('*')
-		.eq('id', record.id)
-		.single();
+		.eq('id', record.id);
 	console.log(reply);
 	if (!reply)
 		return new Response(null, { status: 500, statusText: 'Problems getting the message reply' });
