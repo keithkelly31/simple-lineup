@@ -9,24 +9,35 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 	const { data: reply } = await supabase_admin
 		.from('send_new_message_reply_notification')
 		.select('*')
-		.eq('id', record.unread_reply);
-	console.log(reply);
+		.eq('id', record.unread_reply)
+		.single();
+
 	if (!reply)
 		return new Response(null, { status: 500, statusText: 'Problems getting the message reply' });
 
-	// const from = reply.messages.teams.name;
-	// const html = `
-	// 		<p>${reply.members.first_name} ${reply.members.last_name} has replied to the message <strong>${reply.messages.subject}</strong>.</p>
-	// 		<hr />
-	// 		<pre>${record.text}</pre>
-	// 		<hr />
-	// 		<p>
-	// 			<a href="${url.origin}/team/${reply.messages.teams.id}/messages/${record.message}">View and respond at SimpleLineup.com</a>
-	// 		</p>`;
-	// const subject = `New ${reply.messages.teams.name} Message Reply`;
-	// const text = `${reply.members.first_name} ${reply.members.last_name} has replied to the message ${reply.messages.subject}.\n\n${record.text}\n\nView and respond at ${url.origin}/team/${reply.messages.teams.id}/messages/${record.message}.`;
+	const {
+		member_first_name,
+		member_last_name,
+		message,
+		message_id,
+		message_subject,
+		team_id,
+		team_name
+	} = reply;
 
-	// await supabase_admin.from('emails').insert({ from, html, member: record.member, subject, text });
+	const from = team_name;
+	const html = `
+			<p>${member_first_name} ${member_last_name} has replied to the message <strong>${message_subject}</strong>.</p>
+			<hr />
+			<pre>${message}</pre>
+			<hr />
+			<p>
+				<a href="${url.origin}/team/${team_id}/messages/${message_id}">View and respond at SimpleLineup.com</a>
+			</p>`;
+	const subject = `New ${team_name} Message Reply`;
+	const text = `${member_first_name} ${member_last_name} has replied to the message ${message_subject}.\n\n${message}\n\nView and respond at ${url.origin}/team/${team_id}/messages/${message_id}.`;
+
+	await supabase_admin.from('emails').insert({ from, html, member: record.member, subject, text });
 
 	return new Response();
 }
