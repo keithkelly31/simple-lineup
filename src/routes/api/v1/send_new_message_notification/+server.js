@@ -6,26 +6,38 @@ export async function POST({ locals: { supabase_admin }, request, url }) {
 	if (body.record.read) return new Response();
 
 	const { data } = await supabase_admin
-		.from('messages')
-		.select('subject, text, members(first_name, last_name), teams(id, name)')
+		.from('view_send_new_message_notification')
+		.select('*')
 		.eq('id', record.message)
 		.single();
-	if (!data) return new Response(null, { status: 500 });
+	if (!data) return new Response(null, { status: 404 });
 
-	const from = data.teams.name;
+	const {
+		id,
+		message_subject,
+		message,
+		member_email,
+		member_first_name,
+		member_last_name,
+		team_id,
+		team_name
+	} = data;
+
+	const to = member_email;
+	const from = team_name;
 	const html = `
-		<p>You have received a new message from ${data.members.first_name} ${data.members.last_name}.</p>
+		<p>You have received a new message from ${member_first_name} ${member_last_name}.</p>
 		<hr />
-		<p><strong>${data.subject}</strong></p>
-		<pre>${data.text}</pre>
+		<p><strong>${message_subject}</strong></p>
+		<pre>${message}</pre>
 		<hr />
 		<p>
-			<a href="${url.origin}/team/${data.teams.id}/messages/${record.message}">View and respond at SimpleLineup.com</a>
+			<a href="${url.origin}/team/${team_id}/messages/${id}">View and respond at SimpleLineup.com</a>
 		</p>`;
-	const subject = `New ${data.teams.name} Message`;
-	const text = `You have received a new message from ${data.members.first_name} ${data.members.last_name}.\n\n${data.subject}\n\n${data.text}\n\nView and respond at ${url.origin}/team/${data.teams.id}/messages/${record.message}.`;
+	const subject = `New ${team_name} Message`;
+	const text = `You have received a new message from ${member_first_name} ${member_last_name}.\n\n${message_subject}\n\n${message}\n\nView and respond at ${url.origin}/team/${team_id}/messages/${id}.`;
 
-	await supabase_admin.from('emails').insert({ from, html, member: record.member, subject, text });
+	await supabase_admin.from('emails').insert({ from, html, subject, text, to });
 
 	return new Response();
 }

@@ -1,15 +1,24 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
+import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 
-/** @type {import('./$types').LayoutLoad} */
-export async function load({ fetch, data, depends }) {
+/** @type { import("./$types").LayoutLoad } */
+export const load = async ({ fetch, data, depends }) => {
 	depends('supabase:auth');
 
-	const supabase = createSupabaseLoadClient({
-		supabaseUrl: PUBLIC_SUPABASE_URL,
-		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
-		event: { fetch },
-		serverSession: data.session
+	const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+		global: {
+			fetch
+		},
+		cookies: {
+			get(key) {
+				if (!isBrowser()) {
+					return JSON.stringify(data.session);
+				}
+
+				const cookie = parse(document.cookie);
+				return cookie[key];
+			}
+		}
 	});
 
 	const {
@@ -17,4 +26,4 @@ export async function load({ fetch, data, depends }) {
 	} = await supabase.auth.getSession();
 
 	return { supabase, session };
-}
+};

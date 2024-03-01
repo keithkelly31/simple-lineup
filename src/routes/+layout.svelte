@@ -1,15 +1,18 @@
 <script>
-	import '@fontsource/roboto';
+	import '@fontsource/barlow';
 	import '../app.scss';
 
+	import { browser } from '$app/environment';
 	import { invalidate } from '$app/navigation';
+	import Icon from '$lib/components/icon.svelte';
 	import { onMount } from 'svelte';
 
 	/** @type { import("./$types").LayoutData } */
 	export let data;
-
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
+
+	$: permission = browser && Notification.permission;
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
@@ -43,15 +46,21 @@
 		<ul>
 			{#if session}
 				<li>
-					<a href="/member/{session.user.id}">Home</a>
+					<a class="secondary" href="/member/{session.user.id}/events"><Icon icon="event" /></a>
+				</li>
+				<li>
+					<a class="secondary" href="/member/{session.user.id}/messages"><Icon icon="mail" /></a>
+				</li>
+				<li>
+					<a class="secondary" href="/member/{session.user.id}"><Icon icon="cottage" /></a>
 				</li>
 			{:else}
 				<li>
-					<a href="/auth/signin">Sign In</a>
+					<a class="secondary" href="/auth/signin">Sign In</a>
 				</li>
 
 				<li>
-					<a href="/auth/signup">Sign Up</a>
+					<a class="secondary" href="/auth/signup">Sign Up</a>
 				</li>
 			{/if}
 		</ul>
@@ -59,6 +68,18 @@
 </header>
 
 <main>
+	{#if permission === 'default'}
+		<article>
+			Would you like to set up push notifications on this device?
+			<footer>
+				<div class="grid">
+					<button>Yes</button>
+					<button class="secondary">No</button>
+				</div>
+			</footer>
+		</article>
+	{/if}
+
 	<slot />
 </main>
 
@@ -76,6 +97,10 @@
 </footer>
 
 <style>
+	article {
+		background-color: var(--pico-muted-border-color);
+	}
+
 	footer {
 		border-top: var(--pico-border-width) solid var(--pico-muted-border-color);
 	}

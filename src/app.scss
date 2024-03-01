@@ -2,7 +2,7 @@
   $enable-semantic-container: true,
   $enable-responsive-spacings: true,
   $enable-responsive-typography: true,
-  $theme-color: "pumpkin",
+  $theme-color: "violet",
   $modules: (
     "content/code": false,
     "content/embedded": false,
@@ -23,7 +23,8 @@
 @use "@picocss/pico/scss/colors/utilities" with ($palette: ("color-families": (green, red)));
 
 :root {
-  --pico-font-family: "Roboto", var(--pico-font-family-sans-serif);
+  --pico-font-family: "Barlow", var(--pico-font-family-sans-serif);
+  --pico-line-height: 2;
 }
 
 body {
@@ -34,6 +35,16 @@ body {
 
 button, [role="button"] {
   width: 100%;
+}
+
+nav li a {
+  align-items: center;
+  display: flex;
+}
+
+pre {
+  font-family: var(--pico-font-family);
+  white-space: pre-wrap;
 }
 
 .material-symbols-outlined {

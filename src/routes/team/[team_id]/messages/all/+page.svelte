@@ -1,5 +1,5 @@
 <script>
-	import { page } from '$app/stores';
+	import { format } from 'date-fns';
 
 	/** @type { import("./$types").PageData } */
 	export let data;
@@ -9,12 +9,28 @@
 
 <h3>All</h3>
 
-{#each messages as { created_at, id, subject, text, members: { first_name, last_name } } (id)}
+{#each messages as { created, id, message_subject, message, sender_first_name, sender_last_name, team_id } (id)}
 	<article>
-		<p><strong><a href="/team/{$page.params.team_id}/messages/{id}">{subject}</a></strong></p>
-		<p>{first_name} {last_name}</p>
-		<p>{text}</p>
+		<header>
+			<strong>{sender_first_name} {sender_last_name}</strong>
+			<small class="secondary">{format(created, 'MMM dd @ hh:mm a')}</small>
+		</header>
+		<a href="/team/{team_id}/messages/{id}">{message_subject}</a>
+		<p>{message}</p>
 	</article>
 {:else}
 	<article>You have no messages</article>
 {/each}
+
+<style>
+	p {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	strong {
+		display: block;
+	}
+</style>

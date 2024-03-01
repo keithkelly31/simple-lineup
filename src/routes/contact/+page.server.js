@@ -1,27 +1,26 @@
-import { MAILGUN_DOMAIN } from '$env/static/private';
 import { fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async ({ locals: { mail }, request }) => {
+	default: async ({ locals: { supabase_admin }, request }) => {
 		const form = await request.formData();
 		const email = form.get('email');
 		const message = form.get('message');
 		const name = form.get('name');
 
-		try {
-			const _mail = {
-				to: 'keith@simplelineup.com',
-				from: 'Simple Lineup Contact <noreply@simplelineup.com>',
-				subject: `New Website Contact From ${name}`,
-				text: `Name: ${name}\n\nEmail: ${email}\n\n${message}`,
-				html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>${message}</p>`
-			};
+		const to = 'keith@simplelineup.com';
+		const from = 'Simple Lineup Contact <noreply@simplelineup.com>';
+		const html = `<p>Name: ${name}</p><p>Email: ${email}</p><p>${message}</p>`;
+		const subject = `New Website Contact From ${name}`;
+		const text = `Name: ${name}\n\nEmail: ${email}\n\n${message}`;
 
-			await mail.messages.create(MAILGUN_DOMAIN, _mail);
-		} catch (error) {
-			return fail(500, { error: true, message: 'There was an error sending the message.' });
-		}
+		const { error } = await supabase_admin.from('emails').insert({ from, html, subject, text, to });
+		if (error)
+			return fail(500, {
+				details: error,
+				error: true,
+				message: 'There was an error sending the message.'
+			});
 
 		return {
 			success: true,

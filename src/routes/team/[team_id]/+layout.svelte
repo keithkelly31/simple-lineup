@@ -15,9 +15,6 @@
 	<h1>{team.name}</h1>
 	{#if subscription?.status === 'active'}
 		<Nav let:toggle summary="Team Menu">
-			<NavLink href="/team/{$page.params.team_id}/notifications" {toggle}>Notifications</NavLink>
-			<hr />
-
 			<NavHead>Messages</NavHead>
 			<NavLink href="/team/{$page.params.team_id}/messages/all" {toggle}>All</NavLink>
 			<NavLink href="/team/{$page.params.team_id}/messages/unread" {toggle}>Unread</NavLink>
@@ -28,9 +25,20 @@
 
 			{#if isAdmin}
 				<NavHead>Members</NavHead>
-				<NavLink href="/team/{$page.params.team_id}/members" {toggle}>Members</NavLink>
+				<NavLink href="/team/{$page.params.team_id}/members" {toggle}>Members List</NavLink>
 				<NavLink action href="/team/{$page.params.team_id}/members/invite" {toggle}
 					>Invite Members</NavLink
+				>
+				<hr />
+			{:else}
+				<NavLink href="/team/{$page.params.team_id}/members" {toggle}>Members</NavLink>
+			{/if}
+
+			{#if isAdmin}
+				<NavHead>Polls</NavHead>
+				<NavLink href="/team/{$page.params.team_id}/polls" {toggle}>Polls List</NavLink>
+				<NavLink action href="/team/{$page.params.team_id}/polls/create" {toggle}
+					>Create Poll</NavLink
 				>
 				<hr />
 			{:else}

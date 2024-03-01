@@ -13,6 +13,12 @@
 <h1>{session?.user.user_metadata.first_name} {session?.user.user_metadata.last_name}</h1>
 
 <Nav let:toggle summary="Menu">
+	<NavHead>Events</NavHead>
+	<NavLink href="/member/{$page.params.uid}/events" {toggle}>Upcoming Events</NavLink>
+	<hr />
+	<NavHead>Messages</NavHead>
+	<NavLink href="/member/{$page.params.uid}/messages" {toggle}>Unread Messages</NavLink>
+	<hr />
 	<NavHead>Teams</NavHead>
 	<NavLink href="/member/{$page.params.uid}/teams" {toggle}>My Teams</NavLink>
 	<NavLink action href="/team/create" {toggle}>Create A Team</NavLink>
