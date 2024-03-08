@@ -38,9 +38,6 @@ export const actions = {
 				redirect: '/team/create'
 			});
 
-		// TODO: Create a webhook that adds the admin to the team_members table on creation
-		// TODO: Create webhook that creates a Stripe customer for the team and stores the id
-
 		// try {
 		// 	/** @type { import("stripe").Stripe.Customer } */
 		// 	const customer = await stripe.customers.create({ name: team.id, email: session.user.email });
