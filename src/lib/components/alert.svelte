@@ -1,40 +1,31 @@
 <script>
 	import { slide } from 'svelte/transition';
 
-	/** @type { string | null } */
-	export let code = null;
+	/**
+	 * @typedef { Object } Props
+	 * @prop { boolean } error
+	 * @prop { string } message
+	 * @prop { boolean } success
+	 * @prop { boolean } visible
+	 */
 
-	/** @type { string | null } */
-	export let details = null;
+	/** @type { Props } */
+	let { error = false, message, success = false, visible = false } = $props();
 
-	/** @type { boolean } */
-	export let error = false;
-
-	/** @type { string } */
-	export let message;
-
-	/** @type { boolean } */
-	export let success = false;
-
-	/** @type { boolean } */
-	export let visible = false;
+	$effect(() => {
+		if (success) {
+			setTimeout(() => (visible = false), Math.max(Math.min(message.length * 50, 2000), 7000));
+		}
+	});
 </script>
 
 {#if visible}
 	<article class:error class:success transition:slide>
-		<div>
-			<span>{message}</span>
+		<div>{message}</div>
 
-			{#if code}
-				<span>CODE: {code}.</span>
-			{/if}
-
-			{#if details}
-				<span>DETAILS: {details}.</span>
-			{/if}
-		</div>
-
-		<button on:click={() => (visible = false)}>X</button>
+		{#if error}
+			<button on:click={() => (visible = false)}>X</button>
+		{/if}
 	</article>
 {/if}
 
@@ -44,6 +35,7 @@
 		border: 0;
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
+		color: #fff;
 		display: flex;
 		gap: var(--pico-form-element-spacing-horizontal);
 		justify-content: space-between;

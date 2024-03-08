@@ -1,7 +1,7 @@
 @use "@picocss/pico/scss/pico" with ($semantic-root-element: "#root",
   $enable-semantic-container: true,
-  $enable-responsive-spacings: true,
-  $enable-responsive-typography: true,
+  $enable-responsive-spacings: false,
+  $enable-responsive-typography: false,
   $theme-color: "violet",
   $modules: (
     "content/code": false,
@@ -13,7 +13,6 @@
     "forms/input-range": false,
     "forms/input-search": false,
     "components/group": false,
-    "components/modal": false,
     "components/progress": false,
     "components/tooltip": false,
     "utilities/accessibility": false,
@@ -23,23 +22,11 @@
 @use "@picocss/pico/scss/colors/utilities" with ($palette: ("color-families": (green, red)));
 
 :root {
-  --pico-font-family: "Barlow", var(--pico-font-family-sans-serif);
-  --pico-line-height: 2;
+  --pico-font-family: "Courier Prime", var(--pico-font-family-monospace);
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-button, [role="button"] {
-  width: 100%;
-}
-
-nav li a {
-  align-items: center;
-  display: flex;
+nav ul {
+  flex-wrap: wrap;
 }
 
 pre {
@@ -47,10 +34,6 @@ pre {
   white-space: pre-wrap;
 }
 
-.material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24
+section {
+  margin-bottom: calc(var(--pico-spacing) * 2);
 }

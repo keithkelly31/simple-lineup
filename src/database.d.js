@@ -148,6 +148,10 @@
  * @memberof Database
  *
  * @description TABLE: teams
+ * @description Webhook: INSERT ->  add_team_member
+ *                                  inserts row for admin to the team_members table
+ * @description Webhook: INSERT ->  create_stripe_customer
+ *                                  creates a stripe customer and adds the id to the teams table
  *
  * @prop { string | Member } admin FK members.id
  * - Action: Reference updates -> No Action

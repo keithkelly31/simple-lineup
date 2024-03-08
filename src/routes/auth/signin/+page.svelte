@@ -1,13 +1,5 @@
 <script>
-	import { invalidateAll } from '$app/navigation';
 	import Form from '$lib/components/form.svelte';
-
-	/** @type { import("./$types").ActionData } */
-	export let form;
-
-	$: if (form?.success) {
-		invalidateAll();
-	}
 </script>
 
 <h1>Sign In</h1>

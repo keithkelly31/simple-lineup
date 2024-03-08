@@ -1,9 +1,7 @@
 <script>
 	import Signup from '$lib/forms/signup.svelte';
 
-	/** @type { import("./$types").PageData } */
-	export let data;
-	let { price } = data;
+	let { data } = $props();
 </script>
 
 <section>
@@ -46,7 +44,7 @@
 
 	<p>
 		Please give it a try. You can create a member account for <strong>FREE</strong>. Create a team
-		and try it free for seven days; after that, it is only <strong>${price}</strong> monthly.
+		and try it free for seven days; after that, it is only <strong>${data.price}</strong> monthly.
 	</p>
 
 	<p>

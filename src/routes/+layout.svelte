@@ -1,39 +1,24 @@
 <script>
-	import '@fontsource/barlow';
+	import { browser, dev } from '$app/environment';
+	import '@fontsource/courier-prime';
 	import '../app.scss';
 
-	import { browser } from '$app/environment';
-	import { invalidate } from '$app/navigation';
-	import Icon from '$lib/components/icon.svelte';
-	import { onMount } from 'svelte';
+	let { data } = $props();
 
-	/** @type { import("./$types").LayoutData } */
-	export let data;
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
-
-	$: permission = browser && Notification.permission;
-
-	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-
-		return () => data.subscription.unsubscribe();
-	});
+	let permission = $state(browser && Notification.permission);
 </script>
 
 <svelte:head>
 	<link
 		rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
 	/>
-	<script defer data-domain="simplelineup.com" src="https://plausible.io/js/script.js"></script>
+	{#if !dev}
+		<script defer data-domain="simplelineup.com" src="https://plausible.io/js/script.js"></script>
+	{/if}
 </svelte:head>
 
-<header>
+<header id="top">
 	<nav>
 		<ul>
 			<li>
@@ -44,15 +29,9 @@
 		</ul>
 
 		<ul>
-			{#if session}
+			{#if data.session}
 				<li>
-					<a class="secondary" href="/member/{session.user.id}/events"><Icon icon="event" /></a>
-				</li>
-				<li>
-					<a class="secondary" href="/member/{session.user.id}/messages"><Icon icon="mail" /></a>
-				</li>
-				<li>
-					<a class="secondary" href="/member/{session.user.id}"><Icon icon="cottage" /></a>
+					<a class="secondary" href="/">Home</a>
 				</li>
 			{:else}
 				<li>
@@ -65,12 +44,13 @@
 			{/if}
 		</ul>
 	</nav>
+	<hr />
 </header>
 
 <main>
 	{#if permission === 'default'}
 		<article>
-			Would you like to set up push notifications on this device?
+			Would you like to setup push notifications for this device?
 			<footer>
 				<div class="grid">
 					<button>Yes</button>
@@ -79,15 +59,18 @@
 			</footer>
 		</article>
 	{/if}
-
 	<slot />
 </main>
 
 <footer>
+	<hr />
+
 	<nav>
 		<ul>
 			<li>&copy; Simple Lineup {new Date().getFullYear()}. All rights reserved.</li>
 		</ul>
+	</nav>
+	<nav>
 		<ul>
 			<li><a href="/contact">Contact</a></li>
 			<li><a href="/privacy">Privacy</a></li>
@@ -97,26 +80,6 @@
 </footer>
 
 <style>
-	article {
-		background-color: var(--pico-muted-border-color);
-	}
-
-	footer {
-		border-top: var(--pico-border-width) solid var(--pico-muted-border-color);
-	}
-
-	header {
-		border-bottom: var(--pico-border-width) solid var(--pico-muted-border-color);
-	}
-
-	main {
-		flex: 1;
-	}
-
-	nav {
-		flex-wrap: wrap;
-	}
-
 	.brand {
 		font-size: x-large;
 	}
