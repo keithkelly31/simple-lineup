@@ -61,6 +61,10 @@
 
 		{#if data.isAdmin}
 			<Details label="invite members">
+				<p>
+					Enter the email addresses of the members you would like to invite. Separate addresses with
+					a comma.
+				</p>
 				<Form action="?/invite" label="send invites">
 					<label for="addresses">email addresses</label>
 					<input id="addresses" name="addresses" type="text" required />
@@ -73,7 +77,11 @@
 		{/if}
 
 		<ul>
-			<li>there are no members on this team</li>
+			{#each data.members as { id, first_name, last_name } (id)}
+				<li>{first_name} {last_name}</li>
+			{:else}
+				<li>there are no members on this team</li>
+			{/each}
 		</ul>
 	</section>
 

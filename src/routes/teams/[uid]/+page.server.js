@@ -1,13 +1,13 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ locals: { supabase_admin }, params, parent }) {
+export async function load({ locals: { supabase }, params, parent }) {
 	const { session } = await parent();
 	if (!session) return redirect(307, '/auth/signin');
 
-	const { data, error: err } = await supabase_admin
+	const { data, error: err } = await supabase
 		.from('team_members')
-		.select('*, teams(*)')
+		.select('teams(*)')
 		.eq('member', session.user.id)
 		.eq('team', params.uid);
 
@@ -22,7 +22,13 @@ export async function load({ locals: { supabase_admin }, params, parent }) {
 				"You are not a member of this team. If you believe this is a mistake, please contact your team's administrator."
 		});
 
+	const { data: members } = await supabase
+		.from('team_members')
+		.select('active, members( id, first_name, last_name )')
+		.eq('team', params.uid);
+
 	return {
+		members,
 		isAdmin: session.user.id === data[0].teams.admin,
 		team: data[0].teams
 	};

@@ -23,16 +23,14 @@ export const actions = {
 
 		const form = await request.formData();
 		const name = form.get('name');
-		const password = form.get('password');
 
 		let checkout_url = null;
 
-		if (!name || !password)
-			return fail(400, { error: true, message: 'Please complete all fields of the form.' });
+		if (!name) return fail(400, { error: true, message: "Please enter your team's name." });
 
 		const { data: team, error: err } = await supabase
 			.from('teams')
-			.insert({ name, password, admin: session.user.id })
+			.insert({ name, admin: session.user.id })
 			.select()
 			.single();
 
@@ -42,7 +40,7 @@ export const actions = {
 					'There was an error saving the team to the database. Please try creating your team again.'
 			});
 
-		await new Promise((resolve, reject) => {
+		await new Promise((resolve) => {
 			supabase
 				.channel('team')
 				.on(

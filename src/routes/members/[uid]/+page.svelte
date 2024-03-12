@@ -20,6 +20,9 @@
 			<li>
 				<a href="#settings">settings</a>
 			</li>
+			<li>
+				<a href="/auth/signout" class="secondary">sign out</a>
+			</li>
 		</ul>
 	</nav>
 </section>
@@ -44,13 +47,6 @@
 		<Form action="?/create" label="create a team">
 			<label for="name">name</label>
 			<input type="text" name="name" id="name" required />
-
-			<label for="password">password</label>
-			<input bind:value={password} id="password" name="password" type="text" required />
-			<small
-				>The password is used for new members to join the team and help to prevent anyone from
-				joining that you didn't invite. You can set your own or use the one generated.</small
-			>
 		</Form>
 	</Details>
 
