@@ -22,7 +22,11 @@
 @use "@picocss/pico/scss/colors/utilities" with ($palette: ("color-families": (green, red)));
 
 :root {
-  --pico-font-family: "Courier Prime", var(--pico-font-family-monospace);
+  --pico-font-family: "Roboto", var(--pico-font-family-sans-serif);
+}
+
+button, [role="button"] {
+  width: 100%;
 }
 
 nav ul {

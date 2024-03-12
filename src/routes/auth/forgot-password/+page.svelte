@@ -2,6 +2,10 @@
 	import Form from '$lib/components/form.svelte';
 </script>
 
+<svelte:head>
+	<title>Simple Lineup | Forgot Password</title>
+</svelte:head>
+
 <h1>Forgot Password?</h1>
 
 <p>

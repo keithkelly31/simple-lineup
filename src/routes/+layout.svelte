@@ -1,11 +1,8 @@
 <script>
-	import { browser, dev } from '$app/environment';
-	import '@fontsource/courier-prime';
+	import '@fontsource/roboto';
 	import '../app.scss';
 
 	let { data } = $props();
-
-	let permission = $state(browser && Notification.permission);
 </script>
 
 <svelte:head>
@@ -13,9 +10,6 @@
 		rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
 	/>
-	{#if !dev}
-		<script defer data-domain="simplelineup.com" src="https://plausible.io/js/script.js"></script>
-	{/if}
 </svelte:head>
 
 <header id="top">
@@ -48,17 +42,6 @@
 </header>
 
 <main>
-	{#if permission === 'default'}
-		<article>
-			Would you like to setup push notifications for this device?
-			<footer>
-				<div class="grid">
-					<button>Yes</button>
-					<button class="secondary">No</button>
-				</div>
-			</footer>
-		</article>
-	{/if}
 	<slot />
 </main>
 

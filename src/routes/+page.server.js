@@ -4,7 +4,7 @@ import { redirect } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals: { stripe }, parent }) {
 	const { session } = await parent();
-	if (session) return redirect(301, `/member/${session.user.id}`);
+	if (session) return redirect(301, `/members/${session.user.id}`);
 
 	let price;
 

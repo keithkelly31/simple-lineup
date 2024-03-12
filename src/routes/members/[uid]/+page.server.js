@@ -1,3 +1,4 @@
+import { STRIPE_PRICE } from '$env/static/private';
 import { error, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -24,60 +25,61 @@ export const actions = {
 		const name = form.get('name');
 		const password = form.get('password');
 
+		let checkout_url = null;
+
 		if (!name || !password)
 			return fail(400, { error: true, message: 'Please complete all fields of the form.' });
 
 		const { data: team, error: err } = await supabase
 			.from('teams')
-			.insert({ name, password, admin: session.user.id });
+			.insert({ name, password, admin: session.user.id })
+			.select()
+			.single();
 
 		if (err)
 			return error(500, {
 				message:
-					'There was an error saving the team to the database. Please try creating your team again.',
-				redirect: '/team/create'
+					'There was an error saving the team to the database. Please try creating your team again.'
 			});
 
-		// try {
-		// 	/** @type { import("stripe").Stripe.Customer } */
-		// 	const customer = await stripe.customers.create({ name: team.id, email: session.user.email });
-
-		// 	const { error: custErr } = await supabase
-		// 		.from('teams')
-		// 		.update({ stripe_customer: customer.id })
-		// 		.eq('id', team.id);
-		// 	if (custErr)
-		// 		return error(500, {
-		// 			message: 'There was an error saving supscription customer information.',
-		// 			redirect: `/team/${team.id}`
-		// 		});
-
-		// 	/** @type { import("stripe").Stripe.Checkout.Session } */
-		// 	const checkout_session = await stripe.checkout.sessions.create({
-		// 		cancel_url: `${url.origin}/team/${team.id}`,
-		// 		customer: customer.id,
-		// 		line_items: [
-		// 			{
-		// 				price: STRIPE_PRICE,
-		// 				quantity: 1
-		// 			}
-		// 		],
-		// 		mode: 'subscription',
-		// 		subscription_data: {
-		// 			trial_period_days: 7,
-		// 			trial_settings: {
-		// 				end_behavior: {
-		// 					missing_payment_method: 'pause'
-		// 				}
-		// 			}
-		// 		},
-		// 		success_url: `${url.origin}/team/${team.id}`
-		// 	});
+		await new Promise((resolve, reject) => {
+			supabase
+				.channel('team')
+				.on(
+					'postgres_changes',
+					{ event: 'UPDATE', schema: 'public', table: 'teams', filter: `id=eq.${team.id}` },
+					async (/** @type {any} */ payload) => {
+						const checkout_session = await stripe.checkout.sessions.create({
+							cancel_url: `${url.origin}/team/${payload.new.id}`,
+							customer: payload.new.stripe_customer,
+							line_items: [
+								{
+									price: STRIPE_PRICE,
+									quantity: 1
+								}
+							],
+							mode: 'subscription',
+							subscription_data: {
+								trial_period_days: 7,
+								trial_settings: {
+									end_behavior: {
+										missing_payment_method: 'pause'
+									}
+								}
+							},
+							success_url: `${url.origin}/team/${payload.new.id}`
+						});
+						resolve((checkout_url = checkout_session.url));
+					}
+				)
+				.subscribe();
+		});
 
 		return {
 			success: true,
 			message:
-				"Your team has been created successfully and should show up in your teams list. Go to your team to complete it's activation."
+				"Your team has been created successfully and should show up in your teams list. Go to your team to complete it's activation.",
+			url: checkout_url
 		};
 	},
 

@@ -2,6 +2,7 @@ import { MAILGUN_DOMAIN } from '$env/static/private';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ locals: { mail, supabase_admin }, request }) {
+	// inserted row from emails table
 	const body = await request.json();
 	const record = body.record;
 

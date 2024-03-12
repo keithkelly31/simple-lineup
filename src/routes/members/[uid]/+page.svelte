@@ -12,10 +12,7 @@
 	<nav>
 		<ul>
 			<li>
-				<a href="#events">events</a>
-			</li>
-			<li>
-				<a href="#messages">messages</a>
+				<a href="#games">games</a>
 			</li>
 			<li>
 				<a href="#teams">teams</a>
@@ -27,24 +24,10 @@
 	</nav>
 </section>
 
-<section>
-	<SectionNav label="notifications" showTop={false} />
+<section id="games">
+	<SectionNav label="upcoming games" />
 	<ul>
-		<li>you have no notifications</li>
-	</ul>
-</section>
-
-<section id="events">
-	<SectionNav label="upcoming events" />
-	<ul>
-		<li>you have no upcoming events</li>
-	</ul>
-</section>
-
-<section id="messages">
-	<SectionNav label="unread messages" />
-	<ul>
-		<li>you have no unread messages</li>
+		<li>you have no upcoming games</li>
 	</ul>
 </section>
 
@@ -84,7 +67,7 @@
 	<ul>
 		{#each data.teams as { teams: { id, name } } (id)}
 			<li>
-				<a href="/team/{id}">{name}</a>
+				<a href="/teams/{id}">{name}</a>
 			</li>
 		{:else}
 			<li>you are not a member of any teams</li>
