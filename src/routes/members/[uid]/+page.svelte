@@ -61,7 +61,7 @@
 	</Details>
 
 	<ul>
-		{#each data.teams as { teams: { id, name } } (id)}
+		{#each data.teams.sort( (a, b) => a.teams.name.localeCompare(b.teams.name) ) as { teams: { id, name } } (id)}
 			<li>
 				<a href="/teams/{id}">{name}</a>
 			</li>
