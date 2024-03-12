@@ -6,8 +6,6 @@ export async function POST({ locals: { stripe }, request }) {
 
 	let event;
 
-	console.log(JSON.stringify(request.body));
-
 	try {
 		event = stripe.webhooks.constructEvent(request.body, signature, STRIPE_SECRET_KEY);
 	} catch (error) {
@@ -15,7 +13,7 @@ export async function POST({ locals: { stripe }, request }) {
 		return new Response(`Webhook Error: ${error.message}`, { status: 400 });
 	}
 
-	console.log(event);
+	console.log(event.data);
 
 	return new Response();
 }
