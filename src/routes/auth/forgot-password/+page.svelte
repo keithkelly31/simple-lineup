@@ -3,17 +3,17 @@
 </script>
 
 <svelte:head>
-	<title>Simple Lineup | Forgot Password</title>
+	<title>simple lineup | forgot password</title>
 </svelte:head>
 
-<h1>Forgot Password?</h1>
+<h1>forgot password?</h1>
 
 <p>
 	Please enter the email address associated with your account. If the email address is in our system
 	you will receive an email with instructions to reset your password.
 </p>
 
-<Form label="Send Password Reset">
-	<label for="email">Email</label>
+<Form label="send password reset">
+	<label for="email">email</label>
 	<input id="email" name="email" type="email" required />
 </Form>

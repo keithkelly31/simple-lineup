@@ -5,14 +5,11 @@
 </script>
 
 <svelte:head>
-	<title>Simple Lineup</title>
+	<title>simple lineup</title>
 </svelte:head>
 
 <section>
-	<hgroup>
-		<h1>Simple Lineup</h1>
-		<h2>A simple, straightforward web app for managing your beer league team.</h2>
-	</hgroup>
+	<h2>A simple, straightforward web app for managing your beer league team.</h2>
 
 	<p>
 		My name is Keith, and I am the developer of Simple Lineup. I have been managing a beer league
@@ -22,18 +19,19 @@
 	</p>
 
 	<p>
-		We all know what it is like to tally game attendance through email or a group chat. It's brutal.
+		We all know what it is like to tally game attendance through email or a group text. It's brutal.
 		The apps and websites I tried were just too much, trying to be everything to everyone. I am not
 		looking to track the advanced statistics of our team of forty-year-olds playing beer league
-		hockey at 11 pm on a Wednesday. Nor do I need to assign beer duty. We are all adults and can
-		supply our beer.
+		hockey at 11 pm on a Wednesday. Nor do I need to assign beer duty or tell everyone what color
+		jersey to bring. We are all adults and can supply our beer and we don't know what color jersey
+		to wear until we ask the other team what they have.
 	</p>
 
 	<p>What I need are three things:</p>
 	<ol>
 		<li>I need to know who is coming to the next game</li>
 		<li>I need to be able to quickly and easily communicate changes and updates to the team</li>
-		<li>I need to track who completed their tasks like signing the waiver or paying their dues</li>
+		<li>I need to know who paid</li>
 	</ol>
 
 	<p>
@@ -48,7 +46,7 @@
 
 	<p>
 		Please give it a try. You can create a member account for <strong>FREE</strong>. Create a team
-		and try it free for seven days; after that, it is only <strong>${data.price}</strong> monthly.
+		and try it free for seven days; after that, it is only <strong>${data.price}</strong> a month.
 	</p>
 
 	<p>

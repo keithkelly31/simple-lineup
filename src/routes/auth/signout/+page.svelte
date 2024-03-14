@@ -8,7 +8,7 @@
 	});
 </script>
 
-<article aria-busy="true">Signing Out</article>
+<article aria-busy="true">signing out</article>
 
 <style>
 	article {

@@ -29,13 +29,19 @@
 
 <section id="games">
 	<SectionNav label="upcoming games" />
-	<ul>
-		<li>you have no upcoming games</li>
-	</ul>
+	<article>you have no upcoming games</article>
 </section>
 
 <section id="teams">
 	<SectionNav label="my teams" />
+
+	{#each data.teams.sort( (a, b) => a.teams.name.localeCompare(b.teams.name) ) as { teams: { id, name } } (id)}
+		<article>
+			<a href="/teams/{id}">{name}</a>
+		</article>
+	{:else}
+		<article>you are not a member of any teams</article>
+	{/each}
 
 	<Details label="create a team">
 		<p>
@@ -59,16 +65,6 @@
 			<input id="password" name="password" type="text" required />
 		</Form>
 	</Details>
-
-	<ul>
-		{#each data.teams.sort( (a, b) => a.teams.name.localeCompare(b.teams.name) ) as { teams: { id, name } } (id)}
-			<li>
-				<a href="/teams/{id}">{name}</a>
-			</li>
-		{:else}
-			<li>you are not a member of any teams</li>
-		{/each}
-	</ul>
 </section>
 
 <section id="settings">

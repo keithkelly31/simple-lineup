@@ -8,10 +8,11 @@
 	 * @prop { string } [action]
 	 * @prop { string } label
 	 * @prop { boolean } [reset]
+	 * @prop { string } [test]
 	 */
 
 	/** @type { Props } */
-	let { action: _action, label = 'Save', reset = true } = $props();
+	let { action: _action, label = 'save', reset = true, test = '' } = $props();
 	let action = $state(_action || $page.url.pathname);
 	let busy = $state(false);
 	let error = $state(false);
@@ -49,7 +50,7 @@
 	}
 </script>
 
-<form {action} method="post" use:enhance={submit}>
+<form {action} data-testid={test} method="post" use:enhance={submit}>
 	<slot />
 	<button aria-busy={busy} type="submit">{label}</button>
 </form>

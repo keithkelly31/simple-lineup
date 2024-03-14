@@ -1,10 +1,4 @@
 <script>
-	import Form from '$lib/components/form.svelte';
+	/** @type {import('./$types').PageData} */
+	export let data;
 </script>
-
-<h1>Reset Your Password</h1>
-
-<Form label="Reset Password">
-	<label for="password">New Password</label>
-	<input autocomplete="new-password" id="password" name="password" type="password" required />
-</Form>

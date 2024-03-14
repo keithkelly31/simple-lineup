@@ -1,4 +1,5 @@
 <script>
+	import '@fontsource/courier-prime';
 	import '@fontsource/roboto';
 	import '../app.scss';
 
@@ -17,7 +18,7 @@
 		<ul>
 			<li>
 				<a class="brand" href="/">
-					<strong>Simple Lineup</strong>
+					<strong>simple lineup</strong>
 				</a>
 			</li>
 		</ul>
@@ -25,15 +26,15 @@
 		<ul>
 			{#if data.session}
 				<li>
-					<a class="secondary" href="/">Home</a>
+					<a class="secondary" href="/">home</a>
 				</li>
 			{:else}
 				<li>
-					<a class="secondary" href="/auth/signin">Sign In</a>
+					<a class="secondary" href="/auth/signin">sign in</a>
 				</li>
 
 				<li>
-					<a class="secondary" href="/auth/signup">Sign Up</a>
+					<a class="secondary" href="/auth/signup">sign up</a>
 				</li>
 			{/if}
 		</ul>
@@ -50,20 +51,20 @@
 
 	<nav>
 		<ul>
-			<li>&copy; Simple Lineup {new Date().getFullYear()}. All rights reserved.</li>
+			<li>&copy; simplelineup {new Date().getFullYear()}. all rights reserved.</li>
 		</ul>
 	</nav>
 	<nav>
 		<ul>
-			<li><a href="/contact">Contact</a></li>
-			<li><a href="/privacy">Privacy</a></li>
-			<li><a href="/tos">Terms of Service</a></li>
+			<li><a href="/contact">contact</a></li>
+			<li><a href="/privacy">privacy</a></li>
+			<li><a href="/tos">terms of Service</a></li>
 		</ul>
 	</nav>
 </footer>
 
 <style>
 	.brand {
-		font-size: x-large;
+		font-size: large;
 	}
 </style>

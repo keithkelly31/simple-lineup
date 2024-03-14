@@ -2,8 +2,12 @@
 	import Signup from '$lib/forms/signup.svelte';
 </script>
 
-<h1>Sign Up</h1>
+<svelte:head>
+	<title>simple lineup | sign up</title>
+</svelte:head>
+
+<h1>sign up</h1>
 
 <Signup />
 
-<p><a href="/auth/signin">Already have an account?</a></p>
+<p><a href="/auth/signin">already have an account?</a></p>

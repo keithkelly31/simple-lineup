@@ -65,7 +65,7 @@ export const actions = {
 									}
 								}
 							},
-							success_url: `${url.origin}/team/${payload.new.id}`
+							success_url: `${url.origin}/teams/${payload.new.id}`
 						});
 						resolve((checkout_url = checkout_session.url));
 					}
