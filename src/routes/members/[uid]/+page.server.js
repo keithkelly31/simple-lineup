@@ -18,7 +18,7 @@ import { fail } from '@sveltejs/kit';
 
 /** @type { import("./$types").Actions } */
 export const actions = {
-	create: async ({ locals: { getSession, stripe, supabase }, request, url }) => {
+	create: async ({ locals: { getSession, stripe, supabase, supabase_admin }, request, url }) => {
 		const session = await getSession();
 
 		const form = await request.formData();
@@ -67,7 +67,10 @@ export const actions = {
 							},
 							success_url: `${url.origin}/teams/${payload.new.id}`
 						});
-						await supabase.from('teams').update({ stripe_checkout_session: checkout_session.id });
+						await supabase_admin
+							.from('teams')
+							.update({ stripe_checkout_session: checkout_session.id })
+							.eq('id', team.id);
 						resolve((checkout_url = checkout_session.url));
 					}
 				)
