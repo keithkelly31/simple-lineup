@@ -67,6 +67,7 @@ export const actions = {
 							},
 							success_url: `${url.origin}/teams/${payload.new.id}`
 						});
+						await supabase.from('teams').update({ stripe_checkout_session: checkout_session.id });
 						resolve((checkout_url = checkout_session.url));
 					}
 				)
@@ -95,7 +96,7 @@ export const actions = {
 		return {
 			success: true,
 			message:
-				'An email has been sent to your old and new email addresses to confirm these changes.'
+				'An email has been sent to your old and new email addresses to confirm these changes. Once confirmed the change will take place.'
 		};
 	},
 

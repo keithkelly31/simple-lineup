@@ -3,10 +3,14 @@
 	import Form from '$lib/components/form.svelte';
 	import SectionNav from '$lib/components/section-nav.svelte';
 	let { data } = $props();
-	let password = $state(
-		Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-	);
 </script>
+
+<svelte:head>
+	<title
+		>simple lineup | {data.session?.user.user_metadata.first_name}
+		{data.session?.user.user_metadata.last_name}</title
+	>
+</svelte:head>
 
 <section>
 	<nav>
@@ -35,7 +39,7 @@
 <section id="teams">
 	<SectionNav label="my teams" />
 
-	{#each data.teams.sort( (a, b) => a.teams.name.localeCompare(b.teams.name) ) as { teams: { id, name } } (id)}
+	{#each data.teams.sort( (/** @type {{ teams: { name: string; }; }} */ a, /** @type {{ teams: { name: any; }; }} */ b) => a.teams.name.localeCompare(b.teams.name) ) as { teams: { id, name } } (id)}
 		<article>
 			<a href="/teams/{id}">{name}</a>
 		</article>
@@ -50,7 +54,7 @@
 			subscription.
 		</p>
 
-		<Form action="?/create" label="create a team">
+		<Form action="?/create" label="create team">
 			<label for="name">name</label>
 			<input type="text" name="name" id="name" required />
 		</Form>

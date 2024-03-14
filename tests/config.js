@@ -1,6 +1,6 @@
 export const test_email = 'testuser@simplelineup.com';
 export const test_password = '123456';
-export const test_user_id = 'c1db9fd2-93a9-417b-8d53-cc7f27061b1d';
+export const test_user_id = '9a0f5101-7868-4b3c-ab9c-e812c9610d7b';
 
 export async function signIn(/** @type { import("@playwright/test").Page } */ page) {
 	await page.goto('/auth/signin');
