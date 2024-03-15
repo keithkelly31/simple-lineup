@@ -65,8 +65,10 @@ export const actions = {
 									}
 								}
 							},
-							success_url: `${url.origin}/teams/${payload.new.id}`
+							success_url: `${url.origin}/teams/activate/${payload.new.id}`
 						});
+
+						// Make sure this is stored so the database is cleaned properly when testing
 						await supabase_admin
 							.from('teams')
 							.update({ stripe_checkout_session: checkout_session.id })
