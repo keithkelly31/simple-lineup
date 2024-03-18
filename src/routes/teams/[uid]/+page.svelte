@@ -103,7 +103,6 @@
 
 				<Form action="?/subscription" label="manage subscription">
 					<input type="hidden" name="customer" value={data.team.stripe_customer} />
-					<input type="hidden" name="id" value={data.team.id} />
 				</Form>
 			</section>
 		</section>
@@ -115,7 +114,8 @@
 		<p>
 			Please click the button below to complete the subscription process and activate this team.
 		</p>
-		<Form action="?/activate" label="Activate Team">
+		<Form action="?/subscription" label="Activate Team">
+			<input name="activating" type="hidden" value={true} />
 			<input name="stripe_customer" type="hidden" value={data.team.stripe_customer} />
 		</Form>
 	{:else}

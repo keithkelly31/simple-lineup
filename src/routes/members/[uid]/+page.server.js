@@ -1,4 +1,4 @@
-import { STRIPE_PRICE } from '$env/static/private';
+import { checkoutActivating } from '$lib/config';
 import { error, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -47,26 +47,13 @@ export const actions = {
 					'postgres_changes',
 					{ event: 'UPDATE', schema: 'public', table: 'teams', filter: `id=eq.${team.id}` },
 					async (/** @type {any} */ payload) => {
-						const checkout_session = await stripe.checkout.sessions.create({
-							cancel_url: `${url.origin}/team/${payload.new.id}`,
-							customer: payload.new.stripe_customer,
-							line_items: [
-								{
-									price: STRIPE_PRICE,
-									quantity: 1
-								}
-							],
-							mode: 'subscription',
-							subscription_data: {
-								trial_period_days: 7,
-								trial_settings: {
-									end_behavior: {
-										missing_payment_method: 'pause'
-									}
-								}
-							},
-							success_url: `${url.origin}/teams/activate/${payload.new.id}`
-						});
+						const checkout_session = await stripe.checkout.sessions.create(
+							checkoutActivating({
+								origin: url.origin,
+								stripe_customer: payload.new.stripe_customer,
+								team_id: payload.new.id
+							})
+						);
 
 						// Make sure this is stored so the database is cleaned properly when testing
 						await supabase_admin

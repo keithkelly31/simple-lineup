@@ -1,3 +1,4 @@
+import { checkoutActivating } from '$lib/config';
 import { error, fail, redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -110,19 +111,29 @@ export const actions = {
 
 	subscription: async ({ locals: { stripe }, params, request, url }) => {
 		const form = await request.formData();
-		const customer = form.get('customer');
+		const activating = form.get('activating');
+		const customer = form.get('stripe_customer');
 
 		let session;
 
 		try {
-			session = await stripe.billingPortal.sessions.create({
-				customer,
-				return_url: `${url.origin}/team/${params.uid}`
-			});
+			activating
+				? (session = await stripe.checkout.sessions.create(
+						checkoutActivating({
+							origin: url.origin,
+							stripe_customer: customer,
+							team_id: params.uid
+						})
+					))
+				: (session = await stripe.billingPortal.sessions.create({
+						customer,
+						return_url: `${url.origin}/teams/${params.uid}`
+					}));
 		} catch (error) {
 			return fail(500, {
 				error: true,
-				message: 'There was an error retreiving your subscription.'
+				// @ts-ignore
+				message: `There was an error retreiving your subscription. ${error.message}`
 			});
 		}
 

@@ -2,7 +2,7 @@
 export async function POST({ locals: { supabase_admin }, request }) {
 	const event = await request.json();
 
-	if (event.data.object.status === 'active') {
+	if (event.data.object.status === 'active' || event.data.object.status === 'trialing') {
 		const { data } = await supabase_admin
 			.from('teams')
 			.select('id')
