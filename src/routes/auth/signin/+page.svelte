@@ -8,16 +8,32 @@
 
 <h1>sign in</h1>
 
-<Form label="sign in">
-	<fieldset>
-		<label for="email">email</label>
-		<input autocomplete="email" type="email" name="email" id="email" required />
-	</fieldset>
+<Form
+	label={{
+		busy: 'signing in',
+		default: 'sign in',
+		error: 'sign in error',
+		success: 'signed in successfully'
+	}}
+>
+	<label for="email">email</label>
+	<input
+		required
+		autocomplete="email"
+		id="email"
+		name="email"
+		placeholder="email address"
+		type="email"
+	/>
 
-	<fieldset>
-		<label for="password">password</label>
-		<input autocomplete="new-password" type="password" name="password" id="password" required />
-	</fieldset>
+	<label for="password">password</label>
+	<input
+		required
+		autocomplete="current-password"
+		name="password"
+		placeholder="password"
+		type="password"
+	/>
 </Form>
 
 <p><a href="/auth/signup">need an account?</a></p>

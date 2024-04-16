@@ -8,7 +8,7 @@ export async function load({ locals: { supabase }, parent }) {
 
 	const { data } = await supabase
 		.from('team_members')
-		.select('teams(id, name)')
+		.select('teams(active, id, name)')
 		.eq('member', session.user.id)
 		.eq('active', true);
 	return { teams: data || [] };

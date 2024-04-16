@@ -8,10 +8,4 @@
 	});
 </script>
 
-<article aria-busy="true">signing out</article>
-
-<style>
-	article {
-		text-align: center;
-	}
-</style>
+<article>signing out</article>

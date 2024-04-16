@@ -8,41 +8,52 @@
 	team.
 </p>
 
-<Form action="/auth/signup" label="sign up" test="sign-up-form">
+<Form
+	action="/auth/signup"
+	label={{
+		busy: 'signing up',
+		default: 'sign up',
+		error: 'unable to sign up',
+		success: 'sign up successful'
+	}}
+	test="sign-up-form"
+>
 	<label for="email">email</label>
-	<input autocomplete="email" type="email" name="email" id="email" placeholder="email" required />
+	<input required autocomplete="email" id="email" name="email" placeholder="email" type="email" />
 
-	<label for="password">password</label>
+	<label for="password">password (at least 6 characters)</label>
 	<input
-		autocomplete="new-password"
-		type="password"
-		name="password"
-		id="password"
-		placeholder="password"
 		required
+		autocomplete="new-password"
+		id="password"
+		name="password"
+		placeholder="password (at least 6 characters)"
+		type="password"
 	/>
 
 	<label for="first-name">first name</label>
 	<input
-		autocomplete="given-name"
-		type="text"
-		name="first_name"
-		id="first-name"
-		placeholder="first name"
 		required
+		autocomplete="given-name"
+		id="first-name"
+		name="first_name"
+		placeholder="first name"
+		type="text"
 	/>
 
 	<label for="last-name">last name</label>
 	<input
-		autocomplete="family-name"
-		type="text"
-		name="last_name"
-		id="last-name"
-		placeholder="last name"
 		required
+		autocomplete="family-name"
+		id="last-name"
+		name="last_name"
+		placeholder="last name"
+		type="text"
 	/>
-	<small
-		>You are not requred to use your real name, but this is what is displayed across all of your
-		teams. Rosters and member lists are sorted by last name.</small
-	>
+	<p>
+		<small>
+			You are not requred to use your real name, but this is what is displayed across all of your
+			teams. Rosters and member lists are sorted by last name.
+		</small>
+	</p>
 </Form>

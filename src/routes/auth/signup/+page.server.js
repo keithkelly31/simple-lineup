@@ -23,12 +23,10 @@ export const actions = {
 		});
 		if (error)
 			return fail(400, {
-				error: true,
-				message: `There was an error when attempting to sign you up.\n${error.message}`
+				error: `There was an error when attempting to sign you up.\n${error.message}`
 			});
 		return {
-			success: true,
-			message:
+			success:
 				'You have been signed up successfully. Please check your email to complete the confirmation process. You can safely close this window.'
 		};
 	}

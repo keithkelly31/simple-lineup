@@ -20,9 +20,8 @@ export const actions = {
 		});
 		if (error)
 			return fail(400, {
-				error: true,
-				message: `There was an error when attempting to sign you in. ${error.message}`
+				error: `There was an error when attempting to sign you in. ${error.message}`
 			});
-		return { success: true };
+		redirect(307, '/');
 	}
 };

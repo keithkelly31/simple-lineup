@@ -8,16 +8,17 @@ export async function load({ locals: { supabase }, params, parent }) {
 
 	const { data, error: err } = await supabase
 		.from('team_members')
-		.select('teams(*)')
+		.select('active, teams(*)')
 		.eq('member', session.user.id)
-		.eq('team', params.uid);
+		.eq('team', params.uid)
+		.single();
 
 	if (err)
 		return error(500, {
 			message: 'There was an error retrieving your team membership status from the database.'
 		});
 
-	if (data.length === 0)
+	if (!data.active)
 		return error(401, {
 			message:
 				"You are not a member of this team. If you believe this is a mistake, please contact your team's administrator."
@@ -30,8 +31,8 @@ export async function load({ locals: { supabase }, params, parent }) {
 
 	return {
 		members,
-		isAdmin: session.user.id === data[0].teams.admin,
-		team: data[0].teams
+		isAdmin: session.user.id === data.teams.admin,
+		team: data.teams
 	};
 }
 

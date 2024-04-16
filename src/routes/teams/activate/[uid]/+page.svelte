@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import PageBusy from '$lib/components/page-busy.svelte';
 
 	$effect(() => {
 		$page.data.supabase
@@ -21,4 +22,4 @@
 	});
 </script>
 
-<article aria-busy="true">activating team</article>
+<PageBusy label="activating team" />
