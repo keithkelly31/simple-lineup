@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ parent }) {
 	const { session } = await parent();
-	if (session) return redirect(307, `/member/${session.user.id}`);
+	if (session) return redirect(307, `/members/${session.user.id}`);
 	return {};
 }
 
@@ -23,9 +23,11 @@ export const actions = {
 		});
 		if (error)
 			return fail(400, {
-				error: true,
-				message: `There was an error when attempting to sign you up.\n${error.message}`
+				error: `There was an error when attempting to sign you up.\n${error.message}`
 			});
-		return { success: true, message: 'You have been signed up successfully' };
+		return {
+			success:
+				'You have been signed up successfully. Please check your email to complete the confirmation process. You can safely close this window.'
+		};
 	}
 };

@@ -1,28 +1,40 @@
 <script>
-	import { invalidateAll } from '$app/navigation';
 	import Form from '$lib/components/form.svelte';
-
-	/** @type { import("./$types").ActionData } */
-	export let form;
-
-	$: if (form?.success) {
-		invalidateAll();
-	}
 </script>
 
-<h1>Sign In</h1>
+<svelte:head>
+	<title>simple lineup | sign in</title>
+</svelte:head>
 
-<Form label="Sign In">
-	<fieldset>
-		<label for="email">Email</label>
-		<input autocomplete="email" type="email" name="email" id="email" required />
-	</fieldset>
+<h1>sign in</h1>
 
-	<fieldset>
-		<label for="password">Password</label>
-		<input autocomplete="new-password" type="password" name="password" id="password" required />
-	</fieldset>
+<Form
+	label={{
+		busy: 'signing in',
+		default: 'sign in',
+		error: 'sign in error',
+		success: 'signed in successfully'
+	}}
+>
+	<label for="email">email</label>
+	<input
+		required
+		autocomplete="email"
+		id="email"
+		name="email"
+		placeholder="email address"
+		type="email"
+	/>
+
+	<label for="password">password</label>
+	<input
+		required
+		autocomplete="current-password"
+		name="password"
+		placeholder="password"
+		type="password"
+	/>
 </Form>
 
-<p><a href="/auth/signup">Need an account?</a></p>
-<p><a href="/auth/forgot-password">Forgot your password?</a></p>
+<p><a href="/auth/signup">need an account?</a></p>
+<p><a href="/auth/forgot-password">forgot your password?</a></p>

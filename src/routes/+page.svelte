@@ -1,15 +1,20 @@
-<h1>Simple Lineup</h1>
+<script>
+	import YesNoButtons from '$lib/components/yes-no-buttons.svelte';
+</script>
 
-<p>
-	Thank you for visiting Simple Lineup. I am currently building a web app that will help you manage
-	your rec, church, or beer league teams. Giving you all the tools you need without all of the extra
-	fluff. Including:
-</p>
+<svelte:head>
+	<title>simple lineup</title>
+</svelte:head>
 
-<ul>
-	<li>Event management with availability tracking.</li>
-	<li>Roster management: with simple accounting.</li>
-	<li>Communication management with a messaging and simple chat system.</li>
-</ul>
+<header class="p-4 fixed top-0 left-0 w-full z-50 flex justify-between items-center">
+	<a class="text-2xl no-underline" href="/">Simple Lineup</a>
+	<nav class="flex items-center gap-4">
+		<a href="/auth/signin">Sign In</a>
+		<a href="/auth/signup">Sign up</a>
+	</nav>
+</header>
 
-<p>Please stay tuned as I expect this app in the first quarter of 2024.</p>
+<main class="h-screen w-screen flex flex-col justify-center px-4 max-w-3xl mx-auto">
+	<h1>Are you exhausted by the current state of social media?</h1>
+	<YesNoButtons pathname="/questions/exhausted" />
+</main>

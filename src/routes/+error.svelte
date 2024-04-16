@@ -2,10 +2,13 @@
 	import { page } from '$app/stores';
 </script>
 
-<article>
-	<h1>An Error Occurred</h1>
-	<p>{$page.error?.message}</p>
-	<a href={$page.error?.redirect || '/'}>
-		{$page.error?.redirect ? 'Go back' : 'Head home'}
-	</a>
-</article>
+<h1>An Error Occurred</h1>
+
+<p>{$page.error?.message}</p>
+
+{#if $page.error?.details}
+	<p>Code: {$page.form.details.code}</p>
+	<p>Details: {$page.form.details.message}</p>
+{/if}
+
+<a href="/"> Head home </a>

@@ -1,77 +1,117 @@
 <script>
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { slide } from 'svelte/transition';
+	import Icon from './icon.svelte';
+	import Spinner from './spinner.svelte';
+
+	/** @typedef { Object } Label
+	 * @prop { string } busy
+	 * @prop { string } default
+	 * @prop { string } success
+	 */
+
+	/**
+	 * @typedef { Object } Props
+	 * @prop { string } [action]
+	 * @prop { Label } [label]
+	 * @prop { boolean } [reset]
+	 * @prop { string } [test]
+	 */
+
+	/** @type { Props } */
+	let {
+		action: _action,
+		label = {
+			busy: 'saving',
+			default: 'save',
+			success: 'saved'
+		},
+		reset = true,
+		test = ''
+	} = $props();
 
 	/** @type { string } */
-	export let action = $page.url.pathname;
+	let action = $state(_action || $page.url.pathname);
 
-	/** @type { string } */
-	export let label = 'Save';
+	/** @type { "busy" | "success" | null } */
+	let button = $state(null);
+
+	/** @type { string | null } */
+	let error = $state(null);
+
+	/** @type { string | null } */
+	let success = $state(null);
 
 	/** @type { boolean } */
-	export let reset = true;
-
-	let busy = false;
-	$: visible = $page.form;
+	let visible = $state(false);
 
 	/** @type { import("@sveltejs/kit").SubmitFunction } */
 	function submit() {
-		visible = false;
-		busy = true;
+		error = null;
+		button = 'busy';
 		return async ({ result, update }) => {
-			busy = false;
-
-			if (result.type === 'success' && result.data?.url) {
-				if (new URL(result.data.url).origin !== $page.url.origin) {
-					window.location.href = result.data.url;
-				}
+			if (result.type === 'failure') {
+				error = result.data?.error;
 			}
 
-			update({ reset });
+			if (result.type === 'success' && result.data?.success) {
+				success = result.data.success;
+			}
+
+			result.type === 'success' || result.type === 'redirect'
+				? (button = 'success')
+				: (button = null);
+
+			await update({ reset });
+			await applyAction(result);
 		};
 	}
+
+	$effect(() => {
+		if (error || success) {
+			visible = true;
+		}
+	});
+
+	$effect(() => {
+		if (button === 'success') {
+			setTimeout(() => (button = null), 5000);
+		}
+	});
 </script>
 
-<form {action} method="post" use:enhance={submit}>
+<form {action} data-testid={test} method="post" use:enhance={submit}>
 	<slot />
-	<button aria-busy={busy} type="submit">{label}</button>
+
+	{#if visible}
+		<div
+			class=" rounded my-8 p-6 text-white flex items-center"
+			class:bg-error-500={error}
+			class:bg-success-500={success}
+			transition:slide
+		>
+			<div class="flex-1">{error || success}</div>
+
+			{#if error}
+				<Icon class="cursor-pointer" icon="close" onclick={() => (visible = false)} />
+			{/if}
+		</div>
+	{/if}
+
+	<button
+		class:!bg-success-500={button === 'success'}
+		disabled={button === 'busy' || button === 'success'}
+		type="submit"
+	>
+		{#if button === 'busy'}
+			<Spinner svg_classes="text-primary-100" wrapper_classes="h-5 w-5" />
+			<span>{label.busy}</span>
+		{:else if button === 'success'}
+			<Icon icon="check_circle" />
+			<span>{label.success}</span>
+		{:else}
+			{label.default}
+		{/if}
+	</button>
 </form>
-
-{#if visible}
-	<article class:error={$page.form.error} class:success={$page.form.success} transition:slide>
-		{$page.form.message}
-		<button on:click={() => (visible = false)}>X</button>
-	</article>
-{/if}
-
-<style>
-	article {
-		align-items: flex-start;
-		border-width: 2px;
-		border-style: solid;
-		display: flex;
-		gap: var(--pico-form-element-spacing-horizontal);
-		justify-content: space-between;
-	}
-
-	article.error {
-		background-color: var(--pico-color-red-100);
-		border-color: var(--pico-color-red-600);
-	}
-
-	article.success {
-		background-color: var(--pico-color-green-100);
-		border-color: var(--pico-color-green-600);
-	}
-
-	article button {
-		background-color: transparent;
-		border: none;
-		color: var(--pico-muted-color);
-		font-weight: bolder;
-		padding: calc(var(--pico-form-element-spacing-vertical) * 0.5)
-			calc(var(--pico-form-element-spacing-horizontal) * 0.5);
-		padding-top: 0;
-	}
-</style>

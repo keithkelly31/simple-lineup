@@ -1,21 +1,11 @@
 <script>
 	import { invalidateAll } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
-	/** @type { import("./$types").PageParentData } */
-	export let data;
-	const { supabase } = data;
-
-	onMount(() => {
-		supabase.auth.signOut();
+	$effect(() => {
+		$page.data.supabase.auth.signOut();
 		invalidateAll();
 	});
 </script>
 
-<article aria-busy="true">Signing Out</article>
-
-<style>
-	article {
-		text-align: center;
-	}
-</style>
+<article>signing out</article>

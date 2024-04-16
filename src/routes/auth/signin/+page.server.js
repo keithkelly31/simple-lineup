@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ parent }) {
 	const { session } = await parent();
-	if (session) return redirect(307, `/member/${session.user.id}`);
+	if (session) return redirect(307, `/members/${session.user.id}`);
 	return {};
 }
 
@@ -20,9 +20,8 @@ export const actions = {
 		});
 		if (error)
 			return fail(400, {
-				error: true,
-				message: `There was an error when attempting to sign you in. ${error.message}`
+				error: `There was an error when attempting to sign you in. ${error.message}`
 			});
-		return { success: true };
+		redirect(307, '/');
 	}
 };
