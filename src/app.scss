@@ -1,0 +1,9 @@
+@use "@picocss/pico/scss/pico" with (
+  $enable-semantic-container: true,
+  $semantic-root-element: "#root",
+  $theme-color: "cyan"
+);
+
+@use "@picocss/pico/scss/colors/utilities" with ($palette: ("color-families": (green,
+      red),
+  ));

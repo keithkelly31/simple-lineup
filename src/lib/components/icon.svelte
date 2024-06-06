@@ -1,21 +1,19 @@
 <script>
-	let { icon, ...others } = $props();
+	let { icon, pointer = false, ...others } = $props();
 </script>
 
-<span {...others}>{icon}</span>
+<span class="material-symbols-outlined" class:pointer {...others}>{icon}</span>
 
 <style>
 	span {
-		font-family: 'Material Symbols Rounded';
-		font-weight: normal;
-		font-style: normal;
-		font-size: 24px; /* Preferred icon size */
-		display: inline-block;
-		line-height: 1;
-		text-transform: none;
-		letter-spacing: normal;
-		word-wrap: normal;
-		white-space: nowrap;
-		direction: ltr;
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24;
+	}
+
+	.pointer {
+		cursor: pointer;
 	}
 </style>

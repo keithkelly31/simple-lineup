@@ -1,20 +1,62 @@
-<script>
-	import YesNoButtons from '$lib/components/yes-no-buttons.svelte';
+<script lang="ts">
+	import Form from '$lib/components/form.svelte';
+
+	let league: 'beer' | 'church' | 'rec' = $state('beer');
+
+	$effect(() => {
+		setInterval(() => {
+			switch (league) {
+				case 'beer':
+					league = 'church';
+					break;
+				case 'church':
+					league = 'rec';
+					break;
+				default:
+					league = 'beer';
+			}
+		}, 2000);
+	});
 </script>
 
 <svelte:head>
-	<title>simple lineup</title>
+	<title>Simple Lineup</title>
+	<meta name="description" content="" />
 </svelte:head>
 
-<header class="p-4 fixed top-0 left-0 w-full z-50 flex justify-between items-center">
-	<a class="text-2xl no-underline" href="/">Simple Lineup</a>
-	<nav class="flex items-center gap-4">
-		<a href="/auth/signin">Sign In</a>
-		<a href="/auth/signup">Sign up</a>
-	</nav>
-</header>
+{#snippet leagues(league)}
+	<span>{league}</span>
+{/snippet}
 
-<main class="h-screen w-screen flex flex-col justify-center px-4 max-w-3xl mx-auto">
-	<h1>Are you exhausted by the current state of social media?</h1>
-	<YesNoButtons pathname="/questions/exhausted" />
-</main>
+<section>
+	<h1>Simple {@render leagues(league)} league team manager.</h1>
+	<h2>Easily manage your roster, schedule, communications, and accounting.</h2>
+</section>
+
+<h3>Sign up for updates</h3>
+<p>
+	This web app is currently in development. Sign up for email updates on the progress and more
+	information about features we are developing.
+</p>
+<Form label="Keep Me Updated">
+	<label for="email">Email</label>
+	<input required autocomplete="email" id="email" name="email" type="email" />
+</Form>
+
+<style>
+	h2 {
+		color: var(--pico-muted-color);
+		font-size: 1rem;
+		font-weight: unset;
+	}
+
+	span {
+		background-color: var(--pico-muted-border-color);
+		border-radius: var(--pico-border-radius);
+		display: inline-block;
+		min-width: calc(var(--pico-font-size) * 4);
+		padding: calc(var(--pico-block-spacing-vertical) * 0.5)
+			calc(var(--pico-block-spacing-horizontal) * 0.5);
+		text-align: center;
+	}
+</style>
