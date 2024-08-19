@@ -1,6 +1,7 @@
 <script lang="ts">
+	import '@fontsource-variable/inter';
 	import type { Snippet } from 'svelte';
-	import '../app.scss';
+	import '../app.css';
 
 	interface Props {
 		children: Snippet;
@@ -9,22 +10,10 @@
 	let { children }: Props = $props();
 </script>
 
-<header>
-	<nav>
-		<ul>
-			<li>
-				<strong>
-					<a href="/">Simple Lineup</a>
-				</strong>
-			</li>
-		</ul>
-	</nav>
-</header>
+<h1>Simple Lineup</h1>
 
 <main>
 	{@render children()}
 </main>
 
-<footer>
-	<div>© Simple Lineup. All rights reserved.</div>
-</footer>
+<footer>© Simple Lineup. All rights reserved.</footer>
