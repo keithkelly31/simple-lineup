@@ -47,6 +47,8 @@
 		"@picocss/pico": "^2.0.6",
 		"@supabase/ssr": "^0.5.1",
 		"@supabase/supabase-js": "^2.41.1",
+		"convex": "^1.15.0",
+		"convex-svelte": "^0.0.9",
 		"date-fns": "^3.6.0",
 		"form-data": "^4.0.0",
 		"mailgun.js": "^10.2.1"
