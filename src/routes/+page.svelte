@@ -54,8 +54,7 @@
 
 <p>
 	The website is in development, but if you would like to track its progress, please check out the
-	roadmap. Alternatively, you can get in touch with me directly through <a
-		href="https://x.com/keithkelly31">X</a
-	>
+	roadmap <span class="text-sm">(coming soon)</span>. Alternatively, you can get in touch with me
+	directly through <a href="https://x.com/keithkelly31">X</a>
 	(can we just go back to Twitter?) or <a href="https://discord.gg/jsWz45PP">Discord</a>. Thanks.
 </p>
