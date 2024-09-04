@@ -1,5 +1,7 @@
 @use "@picocss/pico/scss/pico" with (
   $theme-color: "amber",
   $semantic-root-element: "#root",
-  $theme-color: "cyan"
+
+  $enable-semantic-container: true
+
 );

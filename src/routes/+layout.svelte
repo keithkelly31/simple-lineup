@@ -1,4 +1,5 @@
 <script lang="ts">
+
 	import '@fontsource/roboto';
 	import type { Snippet } from 'svelte';
 	import '../app.css';
@@ -45,6 +46,8 @@
 	{@render children()}
 </main>
 
+
 <footer class="text-sm text-slate-500">
+
 	<span>© Simple Lineup. All rights reserved.</span>
 </footer>

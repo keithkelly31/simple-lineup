@@ -3,6 +3,7 @@
 	<meta name="description" content="" />
 </svelte:head>
 
+
 <h1>Simple beer league team manager.</h1>
 
 <h2>Easily manage your roster, schedule, communications, and accounting.</h2>
@@ -58,3 +59,4 @@
 	directly through <a href="https://x.com/keithkelly31">X</a>
 	(can we just go back to Twitter?) or <a href="https://discord.gg/jsWz45PP">Discord</a>. Thanks.
 </p>
+
