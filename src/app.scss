@@ -3,7 +3,3 @@
   $semantic-root-element: "#root",
   $theme-color: "cyan"
 );
-
-@use "@picocss/pico/scss/colors/utilities" with ($palette: ("color-families": (green,
-      red),
-  ));
