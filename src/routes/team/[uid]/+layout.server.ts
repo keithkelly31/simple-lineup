@@ -7,12 +7,12 @@ export const load = (async ({ locals: { convex, stripe }, params, parent }) => {
 
 	const isMember = await convex.query(api.team.checkMembership, {
 		teamId: params.uid,
-		userId: user.id
+		userId: user!._id
 	});
 	if (!isMember) return error(401, 'You are not a member of this team');
 
 	const team = await convex.query(api.team.get, { id: params.uid });
-	const isAdmin = team?.admin === user.id;
+	const isAdmin = team?.admin === user._id;
 
 	const customer = await stripe.customers.retrieve(team?.stripeCustomer, {
 		expand: ['subscriptions']

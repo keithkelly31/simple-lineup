@@ -7,7 +7,6 @@ export default defineSchema({
 		description: v.string(),
 		location: v.string(),
 		notes: v.string(),
-		opponent: v.id('opponents'),
 		team: v.id('teams')
 	}),
 
@@ -20,7 +19,8 @@ export default defineSchema({
 	messages: defineTable({
 		author: v.id('users'),
 		team: v.id('teams'),
-		text: v.string()
+		text: v.string(),
+		title: v.string()
 	}),
 
 	message_recipients: defineTable({
@@ -34,9 +34,11 @@ export default defineSchema({
 		text: v.string()
 	}),
 
-	opponents: defineTable({
-		name: v.string(),
-		team: v.id('teams')
+	notifications: defineTable({
+		message: v.string(),
+		read: v.boolean(),
+		url: v.string(),
+		user: v.id('users')
 	}),
 
 	teams: defineTable({
@@ -52,7 +54,6 @@ export default defineSchema({
 	}),
 
 	users: defineTable({
-		authId: v.optional(v.union(v.string(), v.null())),
 		email: v.string(),
 		firstName: v.string(),
 		lastName: v.string()

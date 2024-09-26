@@ -13,7 +13,7 @@ export const checkMembership = query({
 	handler: async (ctx, { teamId, userId }) => {
 		const check = await ctx.db
 			.query('team_members')
-			.filter((q) => q.and(q.eq(q.field('member'), userId), q.eq(q.field('team'), teamId)))
+			.filter((q) => q.and(q.eq(q.field('user'), userId), q.eq(q.field('team'), teamId)))
 			.first();
 		return check ? true : false;
 	}

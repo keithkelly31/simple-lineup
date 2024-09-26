@@ -19,11 +19,9 @@
 		"@playwright/test": "^1.42.1",
 		"@sveltejs/adapter-vercel": "^5.2.0",
 		"@sveltejs/kit": "^2.5.4",
-
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
 		"@tailwindcss/typography": "^0.5.14",
 		"@types/eslint": "^9.6.1",
-
 		"autoprefixer": "^10.4.20",
 		"dotenv": "^16.4.5",
 		"eslint": "^9.4.0",
@@ -45,6 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource-variable/nunito": "^5.1.0",
 		"@fontsource/roboto": "^5.0.13",
 		"@picocss/pico": "^2.0.6",
 		"@supabase/ssr": "^0.5.1",

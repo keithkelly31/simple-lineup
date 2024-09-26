@@ -5,7 +5,7 @@ export const load: LayoutServerLoad = async ({ locals: { safeGetSession }, cooki
 
 	return {
 		session,
-		user: { ...user, id: user.user_metadata.dbId },
+		user,
 		cookies: cookies.getAll()
 	};
 };

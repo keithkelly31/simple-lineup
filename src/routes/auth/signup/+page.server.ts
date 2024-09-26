@@ -1,6 +1,12 @@
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { api } from '../../../convex/_generated/api';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async ({ parent }) => {
+	const { session } = await parent();
+	if (session) return redirect(307, '/');
+	return {};
+};
 
 export const actions: Actions = {
 	default: async ({ request, locals: { convex, supabase } }) => {
@@ -18,16 +24,13 @@ export const actions: Actions = {
 		lastName = lastName.toString();
 		password = password.toString();
 
-		const dbId = await convex.mutation(api.user.add, { email, firstName, lastName });
-		console.log('dbId: ', dbId);
-		const { data, error } = await supabase.auth.signUp({
+		const _id = await convex.mutation(api.user.add, { email, firstName, lastName });
+		const { error } = await supabase.auth.signUp({
 			email,
 			password,
-			options: { data: { dbId } }
+			options: { data: _id }
 		});
-		if (error) console.error(error);
-		console.log('data: ', data);
-		await convex.mutation(api.user.updateId, { authId: data.user!.id, id: dbId });
+		if (error) return fail(400, { error: error.message });
 
 		return {};
 	}

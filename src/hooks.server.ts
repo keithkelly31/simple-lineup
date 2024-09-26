@@ -1,4 +1,5 @@
-import { STRIPE_SECRET_KEY } from '$env/static/private';
+import { api } from '$convex/_generated/api';
+import { STRIPE_SECRET_KEY, SUPABASE_SERVICE_ROLE } from '$env/static/private';
 import {
 	PUBLIC_CONVEX_URL,
 	PUBLIC_SUPABASE_ANON_KEY,
@@ -28,6 +29,22 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 
+	event.locals.supabaseAdmin = createServerClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
+		cookies: {
+			getAll: () => event.cookies.getAll(),
+			/**
+			 * SvelteKit's cookies API requires `path` to be explicitly set in
+			 * the cookie options. Setting `path` to `/` replicates previous/
+			 * standard behavior.
+			 */
+			setAll: (cookiesToSet) => {
+				cookiesToSet.forEach(({ name, value, options }) => {
+					event.cookies.set(name, value, { ...options, path: '/' });
+				});
+			}
+		}
+	});
+
 	/**
 	 * Unlike `supabase.auth.getSession()`, which returns the session _without_
 	 * validating the JWT, this function also calls `getUser()` to validate the
@@ -42,13 +59,17 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 
 		const {
-			data: { user },
+			data: { user: _user },
 			error
 		} = await event.locals.supabase.auth.getUser();
 		if (error) {
 			// JWT validation has failed
 			return { session: null, user: null };
 		}
+
+		const user = await event.locals.convex.query(api.user.get, {
+			id: session.user.user_metadata._id
+		});
 
 		return { session, user };
 	};

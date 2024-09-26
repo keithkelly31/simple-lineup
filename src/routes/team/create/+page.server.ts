@@ -1,4 +1,4 @@
-import { stripeCheckoutSession } from '$lib/stripe.svelte';
+import { stripeCheckoutSession } from '$stores/stripe.svelte';
 import { fail, redirect } from '@sveltejs/kit';
 import { api } from '../../../convex/_generated/api';
 import type { Actions } from './$types';

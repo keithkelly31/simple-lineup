@@ -1,4 +1,4 @@
-import { Session, SupabaseClient } from '@supabase/supabase-js';
+import type { Session, SupabaseClient } from '@supabase/supabase-js';
 import type { ConvexHttpClient } from 'convex/browser';
 
 declare global {
@@ -6,6 +6,7 @@ declare global {
 		interface Locals {
 			convex: ConvexHttpClient;
 			supabase: SupabaseClient;
+			supabaseAdmin: SupabaseClient;
 			safeGetSession(): Promise<{
 				session: Session | null;
 				user: User | null;

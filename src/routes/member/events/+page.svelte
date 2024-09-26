@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Message } from '$components/items';
+	import { Event } from '$components/items';
 	import Query from '$components/query.svelte';
 	import { api } from '$convex/_generated/api';
 	import type { PageData } from './$types';
@@ -7,11 +7,11 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<h1>Unread Messages</h1>
+<h1>Upcoming Events</h1>
 
 <Query
-	api={api.user.getUnreadMessages}
-	emptyText="You don't have any unread messages"
-	serverData={data.messages}
-	component={Message}
+	api={api.user.getUpcomingEvents}
+	emptyText="You don't have any upcoming events"
+	serverData={data.events}
+	component={Event}
 />
