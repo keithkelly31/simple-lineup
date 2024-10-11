@@ -1,15 +1,13 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import Form from '$lib/components/form/form.svelte';
 </script>
 
 <h1>Team Error</h1>
-<h2>{$page.status}: {$page.error?.message}</h2>
+<h2>{$page.error?.message}</h2>
 
 {#if $page.status === 402 && $page.error?.data.isAdmin}
-	<form action="/team?/activate" method="POST" use:enhance>
+	<Form action="/team?/activate" label="Activate Subscription">
 		<input name="teamId" type="hidden" value={$page.error.data.teamId} />
-		<input name="stripeCustomerId" type="hidden" value={$page.error.data.stripeCustomerId} />
-		<button>Activate Subscription</button>
-	</form>
+	</Form>
 {/if}

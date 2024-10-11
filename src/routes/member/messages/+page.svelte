@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { Message } from '$components/items';
-	import Query from '$components/query.svelte';
 	import { api } from '$convex/_generated/api';
+	import { Query } from '$lib/components';
+	import { Message } from '$lib/items';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 </script>
 
-<h1>Unread Messages</h1>
+<h2>Messages</h2>
 
 <Query
-	api={api.user.getUnreadMessages}
-	emptyText="You don't have any unread messages"
-	serverData={data.messages}
+	api={api.users.getUnreadMessages}
 	component={Message}
+	emptyText="You have no unread messages"
+	serverData={data.messages}
 />

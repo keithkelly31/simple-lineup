@@ -1,8 +1,9 @@
-import { redirect } from '@sveltejs/kit';
+import { handleLoginRedirect } from '$lib/helpers.svelte';
 import type { LayoutServerLoad } from './$types';
 
-export const load = (async ({ parent }) => {
+export const load: LayoutServerLoad = async (event) => {
+	const { parent } = event;
 	const { session } = await parent();
-	if (!session) return redirect(307, '/auth/signin');
+	if (!session) return handleLoginRedirect(event);
 	return {};
-}) satisfies LayoutServerLoad;
+};

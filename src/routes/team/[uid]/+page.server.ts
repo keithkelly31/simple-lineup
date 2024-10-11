@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ params }) => {
-	return redirect(307, `/team/${params.uid}/schedule`);
-}) satisfies PageServerLoad;
+export const load: PageServerLoad = async ({ params }) => {
+	return redirect(302, `/team/${params.uid}/schedule`)
+};

@@ -1,23 +1,36 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { useQuery } from 'convex-svelte';
-	import { api } from '../../../../convex/_generated/api';
+	import { api } from '$convex/_generated/api';
+	import { Details, Form, InputGroup, Query } from '$lib/components';
+	import { Roster } from '$lib/items';
 	import type { PageData } from './$types';
 
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
-
-	const q = useQuery(api.team.getRoster, { id: $page.params.uid });
-	let roster = $derived(q.data || data.roster)!;
+	let { data }: { data: PageData } = $props();
 </script>
 
 <h2>Roster</h2>
 
-{#each roster as player}
-	<article>{player.firstName} {player.lastName}</article>
-{:else}
-	<article>There are no players on this team</article>
-{/each}
+{#if data.isAdmin}
+	<Details summary="Invite New Members">
+		<Form action="?/invite">
+			<InputGroup
+				description="Separate email addresses with a comma"
+				label="Email Addresses"
+				name="addresses"
+				placeholder="Please enter email addresses"
+				required
+			/>
+		</Form>
+	</Details>
+
+	<div role="group">
+		<button class="contrast">Reset Payments</button>
+	</div>
+{/if}
+
+<Query
+	api={api.team.roster}
+	args={{ id: data.team._id }}
+	component={Roster}
+	emptyText="There are no members of this team"
+	serverData={data.roster}
+/>

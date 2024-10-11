@@ -1,34 +1,24 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { useQuery } from 'convex-svelte';
+	import { NavGroup } from '$lib/components';
+	import { Team } from '$stores/team.svelte';
 	import type { Snippet } from 'svelte';
-	import { api } from '../../../convex/_generated/api';
 	import type { LayoutData } from './$types';
 
-	interface Props {
-		children: Snippet;
-		data: LayoutData;
-	}
+	let { children, data }: { children: Snippet; data: LayoutData } = $props();
 
-	let { children, data }: Props = $props();
-
-	const q = useQuery(api.team.get, { id: $page.params.uid });
-	let team = $derived(q.data || data.team)!;
+	Team.isAdmin = data.isAdmin;
 </script>
 
-<nav>
-	<ul>
-		<li><h1>{team.name}</h1></li>
-	</ul>
+<h2>{data.team.name}</h2>
 
-	<ul>
-		<li><a href="/team/{team._id}/messages">Messages</a></li>
-		<li><a href="/team/{team._id}/roster">Roster</a></li>
-		<li><a href="/team/{team._id}/schedule">Schedule</a></li>
-		{#if data.isAdmin}
-			<li><a href="/team/{team._id}/settings">Settings</a></li>
-		{/if}
-	</ul>
-</nav>
+<NavGroup
+	isAdmin={Team.isAdmin}
+	links={[
+		{ path: `/team/${data.team._id}/messages` },
+		{ path: `/team/${data.team._id}/roster` },
+		{ path: `/team/${data.team._id}/schedule` },
+		{ admin: true, path: `/team/${data.team._id}/settings` }
+	]}
+/>
 
 {@render children()}

@@ -3,9 +3,10 @@ import { v } from 'convex/values';
 
 export default defineSchema({
 	events: defineTable({
-		dateTime: v.string(),
+		date: v.string(),
 		description: v.string(),
 		location: v.string(),
+		time: v.string(),
 		notes: v.string(),
 		team: v.id('teams')
 	}),
@@ -18,9 +19,9 @@ export default defineSchema({
 
 	messages: defineTable({
 		author: v.id('users'),
+		subject: v.string(),
 		team: v.id('teams'),
-		text: v.string(),
-		title: v.string()
+		text: v.string()
 	}),
 
 	message_recipients: defineTable({
@@ -34,15 +35,9 @@ export default defineSchema({
 		text: v.string()
 	}),
 
-	notifications: defineTable({
-		message: v.string(),
-		read: v.boolean(),
-		url: v.string(),
-		user: v.id('users')
-	}),
-
 	teams: defineTable({
 		admin: v.id('users'),
+		avatar: v.optional(v.union(v.string(), v.null())),
 		name: v.string(),
 		stripeCustomer: v.optional(v.union(v.string(), v.null()))
 	}),
@@ -51,9 +46,10 @@ export default defineSchema({
 		active: v.boolean(),
 		team: v.id('teams'),
 		user: v.id('users')
-	}),
+	}).index('by_user', ['user']),
 
 	users: defineTable({
+		avatar: v.optional(v.string()),
 		email: v.string(),
 		firstName: v.string(),
 		lastName: v.string()

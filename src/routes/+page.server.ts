@@ -1,8 +1,9 @@
-import { redirect } from '@sveltejs/kit';
+import { handleLoggedInRedirect } from '$lib/helpers.svelte';
+import type { ServerLoadEvent } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ parent }) => {
-	const { session } = await parent();
-	if (session) return redirect(307, '/member');
+export const load: PageServerLoad = async (event: ServerLoadEvent) => {
+	const { session } = await event.parent();
+	if (session) return handleLoggedInRedirect(event);
 	return {};
 };

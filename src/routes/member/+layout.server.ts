@@ -1,16 +1,12 @@
-import { api } from '$convex/_generated/api';
-import { redirect } from '@sveltejs/kit';
+import { handleLoginRedirect } from '$lib/helpers.svelte';
 import type { LayoutServerLoad } from './$types';
 
-export const load = (async ({ locals: { convex }, parent }) => {
-	const { session, user } = await parent();
-	if (!session) return redirect(307, '/auth/signin');
+export const load: LayoutServerLoad= async (event) => {
+    const {
+		parent
+	} = event;
+	const { session } = await parent();
+	if (!session) return handleLoginRedirect(event, 'You must be signed in to access your member page');
 
-	return {
-		events: await convex.query(api.user.getUpcomingEvents, {}),
-		messages: await convex.query(api.user.getUnreadMessages, {}),
-		teams: await convex.query(api.user.getTeams, {
-			userId: user!._id
-		})
-	};
-}) satisfies LayoutServerLoad;
+	return { };
+};
