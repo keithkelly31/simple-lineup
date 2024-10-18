@@ -21,11 +21,7 @@
 	{@const label = _path!.charAt(0).toUpperCase() + _path!.slice(1)}
 
 	{#snippet link()}
-		{#if button && current}
-			<button class="secondary">{label}</button>
-		{:else if button}
-			<a href={path} role="button" class="outline secondary">{label}</a>
-		{:else if current}
+		{#if current}
 			<li><span class="pico-color-slate-200">{label}</span></li>
 		{:else}
 			<li><a href={path} onclick={toggleOpen}>{label}</a></li>
@@ -39,12 +35,6 @@
 	{/if}
 {/snippet}
 
-<nav role="group">
-	{#each links as link}
-		{@render navLink(link, true)}
-	{/each}
-</nav>
-
 <details class="dropdown" bind:open>
 	<summary>Menu</summary>
 
@@ -54,19 +44,3 @@
 		{/each}
 	</ul>
 </details>
-
-<style>
-	nav {
-		display: none;
-	}
-
-	@media screen and (min-width: 768px) {
-		details {
-			display: none;
-		}
-
-		nav {
-			display: inline-flex;
-		}
-	}
-</style>

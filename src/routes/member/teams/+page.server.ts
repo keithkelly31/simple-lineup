@@ -27,16 +27,17 @@ export const actions: Actions = {
 
     if(!name) return fail(400, { message: "Please enter you team's name" });
     name = name.toString().trim().toLowerCase();
+		const userId = session.user._id as Id<"users">;
 
 		try {
 			const teamId = await convex.mutation(api.teams.createTeam, {
-				admin: session.user._id,
+				admin: userId,
 				name
 			});
 
 			await convex.mutation(api.team.addMember, {
 				team: teamId,
-				user: session.user._id
+				user: userId
 			});
 
 			const stripeCustomer = await stripe.customers.create({

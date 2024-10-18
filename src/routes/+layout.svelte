@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { invalidate, invalidateAll } from '$app/navigation';
 	import { PUBLIC_CONVEX_URL } from '$env/static/public';
-	import { setupConvex } from 'convex-svelte';
 	import { Copyright } from 'lucide-svelte';
 	import type { Snippet } from 'svelte';
 	import { onMount } from 'svelte';
@@ -9,8 +8,6 @@
 	import type { LayoutData } from './$types';
 
 	let { children, data }: { children: Snippet; data: LayoutData } = $props();
-
-	setupConvex(PUBLIC_CONVEX_URL);
 
 	onMount(() => {
 		const { data: _data } = data.supabase.auth.onAuthStateChange((event, newSession) => {
