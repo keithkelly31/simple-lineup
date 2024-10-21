@@ -11,16 +11,16 @@ function stripe() {
 
 		async checkoutSession({
 			origin,
-			stripeCustomerId,
-			teamId
+			stripe_customer_id,
+			team_id
 		}: {
 			origin: string;
-			stripeCustomerId: string;
-			teamId: string;
+			stripe_customer_id: string;
+			team_id: string;
 		}) {
 			return await stripe.checkout.sessions.create({
-				cancel_url: `${origin}/team/${teamId}`,
-				customer: stripeCustomerId,
+				cancel_url: `${origin}/team/${team_id}`,
+				customer: stripe_customer_id,
 				line_items: [
 					{
 						price: STRIPE_PRICE,
@@ -36,7 +36,7 @@ function stripe() {
 						}
 					}
 				},
-				success_url: `${origin}/team/${teamId}`
+				success_url: `${origin}/team/${team_id}`
 			});
 		}
 	};

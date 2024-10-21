@@ -24,14 +24,14 @@
 	<div class="grid">
 		<InputGroup
 			label="First Name"
-			name="firstName"
+			name="first_name"
 			placeholder="Please enter your first name"
 			required
 		/>
 
 		<InputGroup
 			label="Last Name"
-			name="lastName"
+			name="last_name"
 			placeholder="Please enter your last name"
 			required
 		/>

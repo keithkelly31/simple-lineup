@@ -1,48 +1,41 @@
-import type { Id } from '$convex/_generated/dataModel';
 import { handleLoginRedirect } from '$lib/helpers.svelte';
-import { error } from '@sveltejs/kit';
-import { api } from '../../../convex/_generated/api';
+import { error as handleError } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async (event) => {
-	const { locals: { convex, stripe }, params, parent } = event;
+	const { locals: { stripe, supabase, supabaseAdmin }, params, parent } = event;
 	const { session } = await parent();
 	if (!session) return handleLoginRedirect(event);
 
-	const teamId = params.uid as Id<'teams'>;
+	const { count, error: memberErr } = await supabase.from("team_members").select().eq("member", session.user.id).eq("team", params.uid).eq("active", true);
+	if(memberErr) return handleError(500, memberErr.message);
+	if(count === 0) return handleError(401, "You are not an active member of this team");
 
-	const isMember = await convex.query(api.team.checkMembership, {
-		teamId,
-		userId: session.user.user_metadata._id
-	});
-	if (!isMember) return error(401, 'You are not a member of this team');
+	let team;
+	const { data, error: teamErr } = await supabase.from("teams").select().eq("id", params.uid).maybeSingle();
+	if(teamErr) return handleError(500, teamErr.message);
+	if(data === null) return handleError(404, 'This team was not found in our database');
+	team = data;
 
-	let team = await convex.query(api.team.get, { id: teamId });
-	if (!team) return error(404, 'This team was not found in our database');
+	const isAdmin = team.admin === session.user.id;
 
-	const isAdmin = team.admin === session.user.user_metadata._id;
-
-	if (!team.stripeCustomer) {
-		const stripeCustomer = await stripe.customers.create({
-			name: teamId,
+	if (team.stripe_customer === null) {
+		const stripe_customer = await stripe.customers.create({
+			name: team.id,
 			email: session.user.email
 		});
 
-		await convex.mutation(api.team.updateStripeCustomer, {
-			stripeCustomer: stripeCustomer.id,
-			teamId
-		});
-
-		team = await convex.query(api.team.get, { id: teamId });
-		if (!team) return error(404, 'This team was not found in our database');
+		const { data, error } = await supabaseAdmin.from("teams").update({ stripe_customer: stripe_customer.id }).eq("id", team.id).select();
+		if(error) return handleError(500, error.message);
+		team = data;
 	}
 
-	const customer = await stripe.customers.retrieve(team.stripeCustomer, {
+	const customer = await stripe.customers.retrieve(team.stripe_customer, {
 		expand: ['subscriptions']
 	});
 
 	if (customer.subscriptions.total_count === 0) {
-		return error(402, {
+		return handleError(402, {
 			data: { isAdmin, teamId: params.uid },
 			message: 'This teams subscription has not been setup.'
 		});
@@ -54,7 +47,7 @@ export const load: LayoutServerLoad = async (event) => {
 		return { isAdmin, team };
 	}
 
-	return error(402, {
+	return handleError(402, {
 		data: { isAdmin },
 		message: 'The subscription for this team is inactive'
 	});

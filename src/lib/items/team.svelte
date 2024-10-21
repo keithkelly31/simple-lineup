@@ -1,13 +1,17 @@
 <script lang="ts">
-	import type { Doc } from '$convex/_generated/dataModel';
 	import { Avatar } from '$lib/components';
+	import type { Tables } from '../../../database.types';
 
-	let { _id, avatar, name }: Doc<'teams'> = $props();
+	interface Props {
+		team: Tables<'teams'>;
+	}
+
+	let { team }: Props = $props();
 </script>
 
 <article>
-	<Avatar {avatar} seed={name} />
-	<a href="/team/{_id}">{name}</a>
+	<Avatar avatar={team.avatar_url} seed={team.name} />
+	<a href="/team/{team.id}">{team.name}</a>
 </article>
 
 <style>

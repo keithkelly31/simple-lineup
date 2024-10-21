@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { api } from '$convex/_generated/api';
-	import type { Doc } from '$convex/_generated/dataModel';
-	import { Form, InputGroup, Query } from '$lib/components';
-	import Details from '$lib/components/details.svelte';
+	import { Details, Form, InputGroup } from '$lib/components';
 	import { Message } from '$lib/items';
+	import type { PageData } from './$types';
 
-	let { data }: { data: Doc<'messages'>[] } = $props();
+	let { data }: { data: PageData } = $props();
 </script>
 
 <h2>Messages</h2>
@@ -21,9 +19,8 @@
 	</Form>
 </Details>
 
-<Query
-	api={api.team.messages}
-	component={Message}
-	emptyText="You don't have any messages"
-	serverData={data}
-/>
+{#each data.messages as message}
+	<Message {message} />
+{:else}
+	<article>There are no messages</article>
+{/each}

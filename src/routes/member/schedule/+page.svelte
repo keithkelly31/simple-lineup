@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { api } from '$convex/_generated/api';
-	import { Query } from '$lib/components';
 	import { Schedule } from '$lib/items';
 	import type { PageData } from './$types';
 
@@ -9,9 +7,8 @@
 
 <h2>Schedule</h2>
 
-<Query
-	api={api.users.getUpcomingEvents}
-	component={Schedule}
-	emptyText="You have no upcoming events"
-	serverData={data.schedule}
-/>
+{#each data.schedule as event}
+	<Schedule {event} />
+{:else}
+	<article>You don't have any upcoming events</article>
+{/each}

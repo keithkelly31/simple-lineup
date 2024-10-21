@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { invalidate, invalidateAll } from '$app/navigation';
-	import { PUBLIC_CONVEX_URL } from '$env/static/public';
+	import '@fontsource/poppins';
 	import { Copyright } from 'lucide-svelte';
-	import type { Snippet } from 'svelte';
-	import { onMount } from 'svelte';
+	import { type Snippet, onMount } from 'svelte';
 	import '../app.scss';
 	import type { LayoutData } from './$types';
 
@@ -72,9 +71,9 @@
 	footer nav li {
 		align-items: center;
 		display: flex;
+	}
 
-		.copyright {
-			margin-left: calc(var(--pico-spacing) * 0.5);
-		}
+	.copyright {
+		margin-left: calc(var(--pico-spacing) * 0.5);
 	}
 </style>

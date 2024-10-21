@@ -1,4 +1,3 @@
-import { api } from '$convex/_generated/api';
 import { handleLoggedInRedirect } from '$lib/helpers.svelte';
 import type { RequestEvent } from '@sveltejs/kit';
 import { fail } from '@sveltejs/kit';
@@ -12,26 +11,25 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions: Actions = {
 	default: async (event: RequestEvent) => {
-		const { locals: { convex, supabase }, request } = event;
+		const { locals: { supabase }, request } = event;
 		const form = await request.formData();
 
 		let email = form.get("email");
-		let firstName = form.get("firstName");
-		let lastName = form.get("lastName");
+		let first_name = form.get("first_name");
+		let last_name = form.get("last_name");
 		let password = form.get("password");
 
-		if(!email || !firstName || !lastName || !password) return fail(400, { message: "Please complete all fields" });
+		if(!email || !first_name || !last_name || !password) return fail(400, { message: "Please complete all fields" });
 
 		email = email.toString().trim();
-		firstName = firstName.toString().trim().toLowerCase();
-		lastName = lastName.toString().trim().toLowerCase();
+		first_name = first_name.toString().trim().toLowerCase();
+		last_name = last_name.toString().trim().toLowerCase();
 		password = password.toString().trim();
 
-		const _id = await convex.mutation(api.users.add, { email, firstName, lastName });
 		const { error } = await supabase.auth.signUp({
 			email,
 			password,
-			options: { data: { _id } }
+			options: { data: { first_name, last_name } }
 		});
 		if (error) return fail(400, { message: error.message });
 

@@ -1,7 +1,11 @@
 <script lang="ts">
-	import type { Doc } from '$convex/_generated/dataModel';
+	import type { Tables } from '../../../database.types';
 
-	let { description }: Doc<'events'> = $props();
+	interface Props {
+		event: Tables<'events'>;
+	}
+
+	let { event }: Props = $props();
 </script>
 
-<article>{description}</article>
+<article>{event.description}</article>

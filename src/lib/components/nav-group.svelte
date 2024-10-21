@@ -35,6 +35,14 @@
 	{/if}
 {/snippet}
 
+<nav>
+	<ul>
+		{#each links as link}
+			{@render navLink(link)}
+		{/each}
+	</ul>
+</nav>
+
 <details class="dropdown" bind:open>
 	<summary>Menu</summary>
 
@@ -44,3 +52,26 @@
 		{/each}
 	</ul>
 </details>
+
+<hr />
+
+<style>
+	hr,
+	nav {
+		display: none;
+	}
+
+	@media screen and (min-width: 768px) {
+		hr {
+			display: block;
+		}
+
+		nav {
+			display: inline-flex;
+		}
+
+		details {
+			display: none;
+		}
+	}
+</style>

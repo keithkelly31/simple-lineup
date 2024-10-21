@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { NavGroup } from '$lib/components';
+	import { Avatar, NavGroup } from '$lib/components';
 	import { Team } from '$stores/team.svelte';
 	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
@@ -9,16 +9,32 @@
 	Team.isAdmin = data.isAdmin;
 </script>
 
-<h2>{data.team.name}</h2>
+<div>
+	<Avatar avatar={data.team.avatar} seed={data.team.name} />
+	<h2>{data.team.name}</h2>
+</div>
 
 <NavGroup
 	isAdmin={Team.isAdmin}
 	links={[
-		{ path: `/team/${data.team._id}/messages` },
-		{ path: `/team/${data.team._id}/roster` },
-		{ path: `/team/${data.team._id}/schedule` },
-		{ admin: true, path: `/team/${data.team._id}/settings` }
+		{ path: `/team/${data.team.id}/messages` },
+		{ path: `/team/${data.team.id}/roster` },
+		{ path: `/team/${data.team.id}/schedule` },
+		{ admin: true, path: `/team/${data.team.id}/settings` }
 	]}
 />
 
 {@render children()}
+
+<style>
+	div {
+		align-items: center;
+		display: flex;
+		gap: var(--pico-spacing);
+		margin-bottom: var(--pico-typography-spacing-vertical);
+	}
+
+	h2 {
+		margin-bottom: 0;
+	}
+</style>

@@ -1,14 +1,18 @@
 <script lang="ts">
-	import type { Doc } from '$convex/_generated/dataModel';
 	import { Avatar } from '$lib/components';
+	import type { Tables } from '../../../database.types';
 
-	let { avatar, firstName, lastName }: Doc<'users'> = $props();
+	interface Props {
+		member: Tables<'profiles'>;
+	}
+
+	let { member }: Props = $props();
 </script>
 
 <article>
 	<div>
-		<Avatar {avatar} seed={lastName} />
-		<span>{firstName} {lastName}</span>
+		<Avatar avatar={member.avatar_url} seed={member.last_name} />
+		<span>{member.first_name} {member.last_name}</span>
 	</div>
 </article>
 

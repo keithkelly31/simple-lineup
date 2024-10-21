@@ -1,8 +1,7 @@
-import { api } from '$convex/_generated/api';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals: { convex } }) => {
+export const load: PageServerLoad = async () => {
     return {
-      schedule: await convex.query(api.users.getUpcomingEvents, { })
+      schedule: []
     };
 };

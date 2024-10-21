@@ -1,4 +1,11 @@
-@use "@picocss/pico/scss/pico" with ($semantic-root-element: "#root",
-  $enable-semantic-container: true);
+@use "@picocss/pico/scss/pico" with (
+  $semantic-root-element: "#root",
+  $theme-color: "indigo",
+  $enable-semantic-container: true
+);
 
 @use "@picocss/pico/scss/colors/utilities";
+
+:root {
+  --pico-font-family: "Poppins", var(--pico-font-family-sans-serif);
+}

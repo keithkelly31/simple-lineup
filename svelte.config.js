@@ -6,7 +6,6 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$components: 'src/components',
-			$convex: 'src/convex',
 			$stores: 'src/stores'
 		},
 		csp: {

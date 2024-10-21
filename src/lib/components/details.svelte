@@ -5,7 +5,7 @@
 </script>
 
 <details>
-	<summary class="outline secondary" role="button">{summary}</summary>
+	<summary>{summary}</summary>
 
 	<div>
 		{@render children()}
@@ -16,6 +16,7 @@
 	div {
 		background-color: var(--pico-card-background-color);
 		border: 1px solid var(--pico-muted-border-color);
+		margin-top: var(--pico-spacing);
 		padding: var(--pico-spacing);
 	}
 

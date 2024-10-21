@@ -1,13 +1,13 @@
-import { api } from '$convex/_generated/api';
-import type { Id } from '$convex/_generated/dataModel';
-import { fail } from '@sveltejs/kit';
+import { fail, error as handleError } from '@sveltejs/kit';
 import isEmail from "validator/lib/isEmail";
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals: { convex }, params}) => {
-    const id = params.uid as Id<"teams">;
+export const load: PageServerLoad = async ({ locals: { supabase }, params}) => {
+    const { data: roster, error } = await supabase.from("team_members").select("...member(*)").eq("team", params.uid).order("member(last_name)");
+    if(error) return handleError(500, error.message);
+    
     return {
-        roster: await convex.query(api.team.roster, { id })
+        roster
     };
 };
 

@@ -1,5 +1,12 @@
 <script lang="ts">
-	let { avatar, seed }: { avatar: string | null | undefined; seed: string } = $props();
+	import type { Tables } from '../../../database.types';
+
+	interface Props {
+		avatar: Tables<'profiles'>['avatar_url'] | Tables<'teams'>['avatar_url'];
+		seed: Tables<'profiles'>['last_name'] | Tables<'teams'>['name'];
+	}
+
+	let { avatar, seed }: Props = $props();
 </script>
 
 <img src={avatar ?? `https://api.dicebear.com/9.x/initials/svg?seed=${seed}`} alt="" />
